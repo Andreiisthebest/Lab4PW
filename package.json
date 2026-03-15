@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Lab 4 landing page migration to Astro",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "concurrently \"astro dev\" \"decap-server\"",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -22,5 +22,9 @@
   "homepage": "https://github.com/Andreiisthebest/Lab4PW#readme",
   "dependencies": {
     "astro": "^6.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "decap-server": "^3.5.2"
   }
 }
