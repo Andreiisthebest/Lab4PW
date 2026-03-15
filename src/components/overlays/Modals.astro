@@ -1,0 +1,19 @@
+<div class="price-zoom-overlay" id="price-zoom" onclick="closePriceZoom()">
+  <button class="fixed top-5 right-6 text-white text-[2rem] bg-transparent border-none cursor-pointer z-[10001] opacity-75 hover:opacity-100 transition-opacity leading-none" onclick="closePriceZoom()">&times;</button>
+  <img id="price-zoom-img" src="" alt="Price list" class="max-w-[92vw] max-h-[92vh] rounded-[12px] object-contain shadow-[0_8px_48px_rgba(0,0,0,0.6)] cursor-zoom-out" />
+</div>
+
+<div class="price-panel-backdrop" id="price-backdrop" onclick="closePricePanel()"></div>
+<aside class="price-panel" id="price-panel">
+  <div class="sticky top-0 bg-white px-7 pt-6 pb-4 border-b border-[#f0e8db] flex items-center justify-between z-10">
+    <h2 class="font-display text-[1.5rem] text-text-dark m-0" id="pp-title">HIFU</h2>
+    <button class="bg-transparent border-none text-[1.6rem] cursor-pointer text-text-dark opacity-60 hover:opacity-100 transition-opacity leading-none" onclick="closePricePanel()">&times;</button>
+  </div>
+  <img class="w-full h-[180px] object-cover block" id="pp-cover" src="" alt="" />
+  <div class="px-7 py-5 flex-1"><div id="pp-photos" class="flex flex-col gap-4"></div></div>
+</aside>
+
+<div class="video-lightbox" id="video-lightbox" onclick="closeVideoLightboxOnBg(event)">
+  <button class="fixed top-5 right-6 text-white text-[2rem] bg-transparent border-none cursor-pointer z-[10000] opacity-80 hover:opacity-100 transition-opacity leading-none" onclick="closeVideoLightbox()">&times;</button>
+  <video id="lightbox-video" controls autoplay playsinline class="max-w-[90vw] max-h-[85vh] rounded-[16px] shadow-[0_8px_40px_rgba(0,0,0,0.6)]"></video>
+</div>

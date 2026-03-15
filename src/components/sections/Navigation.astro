@@ -1,0 +1,29 @@
+<nav class="fixed top-0 w-full bg-white shadow-card z-[1000] font-sans">
+  <div class="max-w-[1600px] mx-auto px-8 py-3 md:py-4 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <img src="/images/logo.jpeg" alt="SVET MEDICAL Logo" class="h-[50px] md:h-[80px] w-auto block object-contain" />
+      <div class="text-[1.1rem] md:text-[1.4rem] font-bold tracking-[0.08em] text-text-dark">SVET <span class="text-primary">MEDICAL</span></div>
+    </div>
+
+    <button id="nav-toggle" aria-label="Toggle navigation" onclick="toggleMobileNav()" class="flex md:hidden flex-col gap-[5px] bg-transparent border-0 cursor-pointer p-1.5 ml-auto z-[1100]">
+      <span class="block w-6 h-[2px] bg-text-dark rounded transition-all duration-300"></span>
+      <span class="block w-6 h-[2px] bg-text-dark rounded transition-all duration-300"></span>
+      <span class="block w-6 h-[2px] bg-text-dark rounded transition-all duration-300"></span>
+    </button>
+
+    <ul id="nav-links" class="hidden md:flex gap-8 items-center list-none m-0 p-0">
+      <li><a href="#about" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="About" data-ro="Despre">About</a></li>
+      <li><a href="#services" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="Services" data-ro="Servicii">Services</a></li>
+      <li><a href="#gallery" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="Gallery" data-ro="Galerie">Gallery</a></li>
+      <li><a href="#team" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="Our Team" data-ro="Echipa">Our Team</a></li>
+      <li><a href="#contact" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="Contact" data-ro="Contact">Contact</a></li>
+      <li><a href="#booking" class="bg-primary text-white px-[1.4rem] py-[0.6rem] rounded-full font-semibold text-[0.95rem] no-underline transition-all duration-300 hover:bg-primary-dark hover:-translate-y-0.5" data-en="Book Now" data-ro="Programare">Book Now</a></li>
+      <li class="mobile-close-nav hidden"><button onclick="toggleMobileNav()" class="bg-transparent border-0 text-[2rem] cursor-pointer text-text-dark leading-none">&times;</button></li>
+    </ul>
+
+    <div id="lang-switcher-el" class="hidden md:flex ml-6 border border-primary rounded-full overflow-hidden">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ro')">RO</button>
+    </div>
+  </div>
+</nav>
