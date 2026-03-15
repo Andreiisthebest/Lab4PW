@@ -25,34 +25,34 @@ collections:
             name: hero
             widget: object
             fields:
-              - { label: Badge EN, name: badge_en, widget: string }
-              - { label: Badge RO, name: badge_ro, widget: string }
-              - { label: Title EN, name: title_en, widget: string }
-              - { label: Title RO, name: title_ro, widget: string }
-              - { label: Description EN, name: description_en, widget: text }
-              - { label: Description RO, name: description_ro, widget: text }
+              - { label: Badge EN, name: badge_en, widget: string, required: false }
+              - { label: Badge RO, name: badge_ro, widget: string, required: false }
+              - { label: Title EN, name: title_en, widget: string, required: false }
+              - { label: Title RO, name: title_ro, widget: string, required: false }
+              - { label: Description EN, name: description_en, widget: text, required: false }
+              - { label: Description RO, name: description_ro, widget: text, required: false }
               - { label: Video, name: video, widget: image }
           - label: About
             name: about
             widget: object
             fields:
-              - { label: Heading EN, name: heading_en, widget: string }
-              - { label: Heading RO, name: heading_ro, widget: string }
-              - { label: Paragraph 1 EN, name: p1_en, widget: text }
-              - { label: Paragraph 1 RO, name: p1_ro, widget: text }
-              - { label: Paragraph 2 EN, name: p2_en, widget: text }
-              - { label: Paragraph 2 RO, name: p2_ro, widget: text }
+              - { label: Heading EN, name: heading_en, widget: string, required: false }
+              - { label: Heading RO, name: heading_ro, widget: string, required: false }
+              - { label: Paragraph 1 EN, name: p1_en, widget: text, required: false }
+              - { label: Paragraph 1 RO, name: p1_ro, widget: text, required: false }
+              - { label: Paragraph 2 EN, name: p2_en, widget: text, required: false }
+              - { label: Paragraph 2 RO, name: p2_ro, widget: text, required: false }
               - { label: Image, name: image, widget: image }
           - label: Contact
             name: contact
             widget: object
             fields:
-              - { label: Address, name: address, widget: string }
-              - { label: Phone, name: phone, widget: string }
-              - { label: Email, name: email, widget: string }
-              - { label: Hours EN, name: hours_en, widget: string }
-              - { label: Hours RO, name: hours_ro, widget: string }
-              - { label: Map Embed URL, name: map_embed_url, widget: string }
+              - { label: Address, name: address, widget: string, required: false }
+              - { label: Phone, name: phone, widget: string, required: false }
+              - { label: Email, name: email, widget: string, required: false }
+              - { label: Hours EN, name: hours_en, widget: string, required: false }
+              - { label: Hours RO, name: hours_ro, widget: string, required: false }
+              - { label: Map Embed URL, name: map_embed_url, widget: string, required: false }
           - label: UI Labels
             name: ui
             widget: object
@@ -61,50 +61,50 @@ collections:
                 name: hero
                 widget: object
                 fields:
-                  - { label: Primary CTA EN, name: cta_primary_en, widget: string }
-                  - { label: Primary CTA RO, name: cta_primary_ro, widget: string }
-                  - { label: Secondary CTA EN, name: cta_secondary_en, widget: string }
-                  - { label: Secondary CTA RO, name: cta_secondary_ro, widget: string }
+                  - { label: Primary CTA EN, name: cta_primary_en, widget: string, required: false }
+                  - { label: Primary CTA RO, name: cta_primary_ro, widget: string, required: false }
+                  - { label: Secondary CTA EN, name: cta_secondary_en, widget: string, required: false }
+                  - { label: Secondary CTA RO, name: cta_secondary_ro, widget: string, required: false }
               - label: Services
                 name: services
                 widget: object
                 fields:
-                  - { label: Kicker EN, name: kicker_en, widget: string }
-                  - { label: Kicker RO, name: kicker_ro, widget: string }
-                  - { label: Heading EN, name: heading_en, widget: string }
-                  - { label: Heading RO, name: heading_ro, widget: string }
-                  - { label: Card CTA EN, name: card_cta_en, widget: string }
-                  - { label: Card CTA RO, name: card_cta_ro, widget: string }
+                  - { label: Kicker EN, name: kicker_en, widget: string, required: false }
+                  - { label: Kicker RO, name: kicker_ro, widget: string, required: false }
+                  - { label: Heading EN, name: heading_en, widget: string, required: false }
+                  - { label: Heading RO, name: heading_ro, widget: string, required: false }
+                  - { label: Card CTA EN, name: card_cta_en, widget: string, required: false }
+                  - { label: Card CTA RO, name: card_cta_ro, widget: string, required: false }
               - label: Team
                 name: team
                 widget: object
                 fields:
-                  - { label: Heading EN, name: heading_en, widget: string }
-                  - { label: Heading RO, name: heading_ro, widget: string }
+                  - { label: Heading EN, name: heading_en, widget: string, required: false }
+                  - { label: Heading RO, name: heading_ro, widget: string, required: false }
               - label: Testimonials
                 name: testimonials
                 widget: object
                 fields:
-                  - { label: Heading EN, name: heading_en, widget: string }
-                  - { label: Heading RO, name: heading_ro, widget: string }
+                  - { label: Heading EN, name: heading_en, widget: string, required: false }
+                  - { label: Heading RO, name: heading_ro, widget: string, required: false }
               - label: Booking
                 name: booking
                 widget: object
                 fields:
-                  - { label: Heading EN, name: heading_en, widget: string }
-                  - { label: Heading RO, name: heading_ro, widget: string }
-                  - { label: Name Placeholder EN, name: name_placeholder_en, widget: string }
-                  - { label: Name Placeholder RO, name: name_placeholder_ro, widget: string }
-                  - { label: Phone Placeholder EN, name: phone_placeholder_en, widget: string }
-                  - { label: Phone Placeholder RO, name: phone_placeholder_ro, widget: string }
-                  - { label: Button EN, name: button_en, widget: string }
-                  - { label: Button RO, name: button_ro, widget: string }
+                  - { label: Heading EN, name: heading_en, widget: string, required: false }
+                  - { label: Heading RO, name: heading_ro, widget: string, required: false }
+                  - { label: Name Placeholder EN, name: name_placeholder_en, widget: string, required: false }
+                  - { label: Name Placeholder RO, name: name_placeholder_ro, widget: string, required: false }
+                  - { label: Phone Placeholder EN, name: phone_placeholder_en, widget: string, required: false }
+                  - { label: Phone Placeholder RO, name: phone_placeholder_ro, widget: string, required: false }
+                  - { label: Button EN, name: button_en, widget: string, required: false }
+                  - { label: Button RO, name: button_ro, widget: string, required: false }
               - label: Contact
                 name: contact
                 widget: object
                 fields:
-                  - { label: Heading EN (supports HTML), name: heading_en, widget: text }
-                  - { label: Heading RO (supports HTML), name: heading_ro, widget: text }
+                  - { label: Heading EN (supports HTML), name: heading_en, widget: text, required: false }
+                  - { label: Heading RO (supports HTML), name: heading_ro, widget: text, required: false }
 
   - name: services
     label: Services
@@ -115,8 +115,8 @@ collections:
     extension: yml
     fields:
       - { label: Key, name: key, widget: string, hint: "Used by the price panel script (example: hifu)." }
-      - { label: Title EN, name: title_en, widget: string }
-      - { label: Title RO, name: title_ro, widget: string }
+      - { label: Title EN, name: title_en, widget: string, required: false }
+      - { label: Title RO, name: title_ro, widget: string, required: false }
       - { label: Cover Image, name: cover, widget: image }
       - label: Gallery Images
         name: photos
@@ -133,9 +133,9 @@ collections:
     format: yaml
     extension: yml
     fields:
-      - { label: Name, name: name, widget: string }
-      - { label: Role EN, name: role_en, widget: string }
-      - { label: Role RO, name: role_ro, widget: string }
+      - { label: Name, name: name, widget: string, required: false }
+      - { label: Role EN, name: role_en, widget: string, required: false }
+      - { label: Role RO, name: role_ro, widget: string, required: false }
       - { label: Photo, name: photo, widget: image, required: false }
       - { label: Sort Order, name: order, widget: number, value_type: int, default: 0 }
 
@@ -147,10 +147,12 @@ collections:
     format: yaml
     extension: yml
     fields:
-      - { label: Author, name: author, widget: string }
-      - { label: Service EN, name: service_en, widget: string }
-      - { label: Service RO, name: service_ro, widget: string }
-      - { label: Quote EN, name: quote_en, widget: text }
-      - { label: Quote RO, name: quote_ro, widget: text }
+      - { label: Author, name: author, widget: string, required: false }
+      - { label: Service EN, name: service_en, widget: string, required: false }
+      - { label: Service RO, name: service_ro, widget: string, required: false }
+      - { label: Quote EN, name: quote_en, widget: text, required: false }
+      - { label: Quote RO, name: quote_ro, widget: text, required: false }
       - { label: Rating, name: rating, widget: number, value_type: int, min: 1, max: 5, default: 5 }
       - { label: Sort Order, name: order, widget: number, value_type: int, default: 0 }
+
+local_backend: true
