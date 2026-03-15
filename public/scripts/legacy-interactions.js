@@ -1,7 +1,9 @@
-const priceData = {
+const fallbackPriceData = {
   hifu: { en: 'HIFU', ro: 'HIFU', cover: '/images/HIFO.jpg', photos: ['/images/1.jpeg', '/images/2.jpeg'] },
   femei: { en: 'For Women', ro: 'Pentru Femei', cover: '/images/for_women.jpg', photos: ['/images/3.jpeg', '/images/4.jpeg'] }
 };
+
+const priceData = window.__PRICE_DATA__ || fallbackPriceData;
 
 let currentLang = 'en';
 

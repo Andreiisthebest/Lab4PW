@@ -1,3 +1,18 @@
+---
+interface ServiceItem {
+  key: string;
+  title_en: string;
+  title_ro: string;
+  cover: string;
+}
+
+interface Props {
+  services: ServiceItem[];
+}
+
+const { services } = Astro.props;
+---
+
 <section class="bg-bg-light py-20 px-8" id="services">
   <div class="max-w-[1600px] mx-auto">
     <div class="text-center mb-14">
@@ -6,25 +21,17 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-      <div class="bg-white rounded-[20px] overflow-hidden shadow-card-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col cursor-pointer" onclick="openPricePanel('hifu')">
-        <div class="relative overflow-hidden h-[260px] group">
-          <img src="/images/HIFO.jpg" alt="HIFU" class="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.04]" />
+      {services.map((service) => (
+        <div class="bg-white rounded-[20px] overflow-hidden shadow-card-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col cursor-pointer" onclick={`openPricePanel('${service.key}')`}>
+          <div class="relative overflow-hidden h-[260px] group">
+            <img src={service.cover} alt={service.title_en} class="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.04]" />
+          </div>
+          <div class="px-6 py-5 flex items-center justify-between">
+            <h3 class="text-[1.2rem] text-text-dark font-bold tracking-[0.03em]" data-en={service.title_en} data-ro={service.title_ro}>{service.title_en}</h3>
+            <button class="text-[0.8rem] text-primary font-semibold uppercase tracking-[0.05em] bg-transparent border-0 p-0 cursor-pointer" data-en="View Prices &rsaquo;" data-ro="Vezi Preturi &rsaquo;">View Prices &rsaquo;</button>
+          </div>
         </div>
-        <div class="px-6 py-5 flex items-center justify-between">
-          <h3 class="text-[1.2rem] text-text-dark font-bold tracking-[0.03em]">HIFU</h3>
-          <button class="text-[0.8rem] text-primary font-semibold uppercase tracking-[0.05em] bg-transparent border-0 p-0 cursor-pointer" data-en="View Prices &rsaquo;" data-ro="Vezi Preturi &rsaquo;">View Prices &rsaquo;</button>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-[20px] overflow-hidden shadow-card-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col cursor-pointer" onclick="openPricePanel('femei')">
-        <div class="relative overflow-hidden h-[260px] group">
-          <img src="/images/for_women.jpg" alt="For Women" class="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.04]" />
-        </div>
-        <div class="px-6 py-5 flex items-center justify-between">
-          <h3 class="text-[1.2rem] text-text-dark font-bold tracking-[0.03em]" data-en="For Women" data-ro="Pentru Femei">For Women</h3>
-          <button class="text-[0.8rem] text-primary font-semibold uppercase tracking-[0.05em] bg-transparent border-0 p-0 cursor-pointer" data-en="View Prices &rsaquo;" data-ro="Vezi Preturi &rsaquo;">View Prices &rsaquo;</button>
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>

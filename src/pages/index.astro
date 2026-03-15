@@ -14,24 +14,46 @@ import Footer from '../components/sections/Footer.astro';
 import Modals from '../components/overlays/Modals.astro';
 import Mascot from '../components/ui/Mascot.astro';
 import StickyMobileCta from '../components/ui/StickyMobileCta.astro';
+import { getHomepageContent, getServices, getTeam, getTestimonials } from '../lib/content';
+
+const homepage = getHomepageContent();
+const services = getServices();
+const team = getTeam();
+const testimonials = getTestimonials();
+
+const priceData = Object.fromEntries(
+  services.map((service) => [
+    service.key,
+    {
+      en: service.title_en,
+      ro: service.title_ro,
+      cover: service.cover,
+      photos: service.photos.map((photo) => photo.image)
+    }
+  ])
+);
 ---
 
 <BaseLayout title="SVET MEDICAL - Beauty Salon">
   <Navigation />
-  <Hero />
+  <Hero hero={homepage.hero} />
   <MobilePromo />
-  <About />
-  <Services />
+  <About about={homepage.about} />
+  <Services services={services} />
   <Gallery />
-  <Team />
-  <Testimonials />
+  <Team members={team} />
+  <Testimonials testimonials={testimonials} />
   <Booking />
-  <Contact />
+  <Contact contact={homepage.contact} />
   <Footer />
 
   <Modals />
   <Mascot />
   <StickyMobileCta />
+
+  <script is:inline define:vars={{ priceData }}>
+    window.__PRICE_DATA__ = priceData;
+  </script>
 
   <script is:inline src="/scripts/legacy-interactions.js"></script>
 </BaseLayout>

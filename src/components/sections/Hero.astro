@@ -1,10 +1,26 @@
+---
+interface Props {
+  hero: {
+    badge_en: string;
+    badge_ro: string;
+    title_en: string;
+    title_ro: string;
+    description_en: string;
+    description_ro: string;
+    video: string;
+  };
+}
+
+const { hero } = Astro.props;
+---
+
 <section class="mt-[74px] md:mt-[74px] h-auto md:h-[calc(100vh-74px)] flex items-stretch bg-bg-light overflow-hidden">
   <div class="flex flex-col md:flex-row items-center w-full">
     <div class="flex-[1.2] flex flex-col justify-center items-start px-6 py-10 md:p-16">
       <div class="w-full max-w-[480px]">
-        <p class="text-[0.78rem] md:text-[0.85rem] tracking-[0.2em] uppercase text-primary font-semibold mb-4" data-en="Premium Beauty &amp; Medical Aesthetics" data-ro="Frumusete Premium &amp; Estetica Medicala">Premium Beauty &amp; Medical Aesthetics</p>
-        <h1 class="font-display text-[2rem] md:text-[3.2rem] leading-[1.2] md:leading-[1.15] text-text-dark mb-6" data-en="Your Beauty,<br>Our <span class='text-primary'>Expertise</span>" data-ro="Frumusetea Ta,<br><span class='text-primary'>Expertiza</span> Noastra">Your Beauty,<br />Our <span class="text-primary">Expertise</span></h1>
-        <p class="text-[0.95rem] md:text-[1.1rem] text-text-light leading-[1.8] mb-10" data-en="At SVET MEDICAL we blend cutting-edge medical aesthetics with luxurious beauty treatments, tailored exclusively for you." data-ro="La SVET MEDICAL imbinam estetica medicala cu tratamente de frumusete luxoase.">At SVET MEDICAL we blend cutting-edge medical aesthetics with luxurious beauty treatments, tailored exclusively for you.</p>
+        <p class="text-[0.78rem] md:text-[0.85rem] tracking-[0.2em] uppercase text-primary font-semibold mb-4" data-en={hero.badge_en} data-ro={hero.badge_ro}>{hero.badge_en}</p>
+        <h1 class="font-display text-[2rem] md:text-[3.2rem] leading-[1.2] md:leading-[1.15] text-text-dark mb-6" data-en={hero.title_en} data-ro={hero.title_ro}>{hero.title_en}</h1>
+        <p class="text-[0.95rem] md:text-[1.1rem] text-text-light leading-[1.8] mb-10" data-en={hero.description_en} data-ro={hero.description_ro}>{hero.description_en}</p>
         <div class="flex gap-4 flex-wrap">
           <a href="#booking" class="btn-primary" data-en="Book an Appointment" data-ro="Fa o Programare">Book an Appointment</a>
           <a href="#services" class="btn-outline" data-en="View Services" data-ro="Vezi Serviciile">View Services</a>
@@ -14,7 +30,7 @@
 
     <div class="flex-[0.8] flex items-center justify-center px-6 pb-10 md:py-12 md:pr-16 md:pl-8 bg-bg-light w-full">
       <video class="w-full h-full object-cover rounded-[28px] shadow-[0_20px_60px_rgba(0,0,0,0.18)] block max-h-[55vw] md:max-h-full" autoplay loop muted playsinline>
-        <source src="/images/video3.mp4" type="video/mp4" />
+        <source src={hero.video} type="video/mp4" />
       </video>
     </div>
   </div>

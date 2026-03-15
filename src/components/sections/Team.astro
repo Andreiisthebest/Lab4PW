@@ -1,13 +1,31 @@
+---
+interface TeamItem {
+  name: string;
+  role_en: string;
+  role_ro: string;
+  photo?: string;
+}
+
+interface Props {
+  members: TeamItem[];
+}
+
+const { members } = Astro.props;
+---
+
 <section class="bg-bg-light py-12 md:py-20 px-4 md:px-8" id="team">
   <div class="max-w-[1600px] mx-auto">
     <div class="text-center mb-14">
       <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark mb-4" data-en="Our Team" data-ro="Echipa Noastra">Our Team</h2>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-      <div class="bg-white rounded-[16px] overflow-hidden shadow-card text-center"><div class="p-5"><h3 class="font-display text-[1rem] text-text-dark mb-1">Dr. Anna Ivanova</h3><span class="text-[0.85rem] text-primary">Medical Aesthetics</span></div></div>
-      <div class="bg-white rounded-[16px] overflow-hidden shadow-card text-center"><div class="p-5"><h3 class="font-display text-[1rem] text-text-dark mb-1">Maria Petrova</h3><span class="text-[0.85rem] text-primary">Senior Cosmetologist</span></div></div>
-      <div class="bg-white rounded-[16px] overflow-hidden shadow-card text-center"><div class="p-5"><h3 class="font-display text-[1rem] text-text-dark mb-1">Elena Koroleva</h3><span class="text-[0.85rem] text-primary">Laser Specialist</span></div></div>
-      <div class="bg-white rounded-[16px] overflow-hidden shadow-card text-center"><div class="p-5"><h3 class="font-display text-[1rem] text-text-dark mb-1">Sofia Novikova</h3><span class="text-[0.85rem] text-primary">Makeup Artist</span></div></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {members.map((member) => (
+        <div class="bg-white rounded-[20px] p-8 text-center shadow-card transition-transform duration-300 hover:-translate-y-1.5">
+          <img src={member.photo ?? '/images/16.png'} alt={member.name} class="w-[160px] h-[160px] rounded-full object-cover mx-auto mb-5 border-4 border-primary" />
+          <h3 class="text-[1.2rem] font-bold text-text-dark mb-1" data-en={member.name} data-ro={member.name}>{member.name}</h3>
+          <p class="text-primary text-[0.95rem] mb-4" data-en={member.role_en} data-ro={member.role_ro}>{member.role_en}</p>
+        </div>
+      ))}
     </div>
   </div>
 </section>

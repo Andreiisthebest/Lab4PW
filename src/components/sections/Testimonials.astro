@@ -1,12 +1,29 @@
+---
+interface TestimonialItem {
+  quote_en: string;
+  quote_ro: string;
+  author: string;
+}
+
+interface Props {
+  testimonials: TestimonialItem[];
+}
+
+const { testimonials } = Astro.props;
+---
+
 <section class="bg-white py-12 md:py-20 px-4 md:px-8">
   <div class="max-w-[1600px] mx-auto">
     <div class="text-center mb-14">
       <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark" data-en="What Our Clients Say" data-ro="Ce Spun Clientii Nostri">What Our Clients Say</h2>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="bg-bg-light rounded-[16px] p-8 shadow-card"><div class="text-primary text-[1.1rem] mb-4">★★★★★</div><p class="text-text-light leading-[1.8] italic mb-6">"Incredible experience!"</p></div>
-      <div class="bg-bg-light rounded-[16px] p-8 shadow-card"><div class="text-primary text-[1.1rem] mb-4">★★★★★</div><p class="text-text-light leading-[1.8] italic mb-6">"Highly recommend!"</p></div>
-      <div class="bg-bg-light rounded-[16px] p-8 shadow-card"><div class="text-primary text-[1.1rem] mb-4">★★★★★</div><p class="text-text-light leading-[1.8] italic mb-6">"Luxurious salon with medical expertise."</p></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {testimonials.map((item) => (
+        <div class="bg-bg-light p-8 rounded-[20px] shadow-card-lift">
+          <p class="text-text-light mb-4" data-en={item.quote_en} data-ro={item.quote_ro}>{item.quote_en}</p>
+          <h4 class="text-text-dark font-semibold" data-en={`- ${item.author}`} data-ro={`- ${item.author}`}>{`- ${item.author}`}</h4>
+        </div>
+      ))}
     </div>
   </div>
 </section>
