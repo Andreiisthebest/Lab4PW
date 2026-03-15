@@ -1,0 +1,15 @@
+:root {
+  --color-primary: #c9a96e;
+  --color-primary-dark: #a07840;
+  --color-secondary: #f3e9d2;
+  --color-text-dark: #2c2c2c;
+  --color-text-light: #7a7a7a;
+  --color-bg-light: #fdf8f2;
+  --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.08);
+  --shadow-card-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+body {
+  background: var(--color-bg-light);
+  color: var(--color-text-dark);
+}

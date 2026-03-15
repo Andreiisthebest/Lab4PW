@@ -1,5 +1,9 @@
 ---
 const pageTitle = 'SVET MEDICAL | Astro Migration';
+
+import '../styles/reset.css';
+import '../styles/theme.css';
+import '../styles/legacy-inline.css';
 ---
 
 <!doctype html>
@@ -10,9 +14,9 @@ const pageTitle = 'SVET MEDICAL | Astro Migration';
     <title>{pageTitle}</title>
   </head>
   <body>
-    <main>
+    <main style="max-width: 960px; margin: 4rem auto; padding: 0 1rem;">
       <h1>Astro setup complete</h1>
-      <p>The landing page migration from legacy HTML will be applied in the next step.</p>
+      <p>Styles and assets are now ported to Astro structure. Section/component migration is next.</p>
     </main>
   </body>
 </html>
