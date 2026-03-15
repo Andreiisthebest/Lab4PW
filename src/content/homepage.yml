@@ -1,0 +1,23 @@
+hero:
+  badge_en: Premium Beauty & Medical Aesthetics
+  badge_ro: Frumusete Premium & Estetica Medicala
+  title_en: Your Beauty, Our Expertise
+  title_ro: Frumusetea Ta, Expertiza Noastra
+  description_en: At SVET MEDICAL we blend cutting-edge medical aesthetics with luxurious beauty treatments.
+  description_ro: La SVET MEDICAL imbinam estetica medicala cu tratamente de frumusete luxoase.
+  video: /images/video3.mp4
+about:
+  heading_en: More than a salon, a medical experience
+  heading_ro: Mai mult decat un salon, o experienta medicala
+  p1_en: SVET MEDICAL was founded on the belief that true beauty comes from within.
+  p1_ro: SVET MEDICAL a fost fondata pe convingerea ca frumusetea adevarata vine din interior.
+  p2_en: Every visit is a step toward a more confident you.
+  p2_ro: Fiecare vizita este un pas spre o versiune mai increzatoare a ta.
+  image: /images/16.png
+contact:
+  address: Barbu Vacarescu 164, Bucuresti
+  phone: "+40788844819"
+  email: svetmed@gmail.com
+  hours_en: Mon - Sat 9:00 AM - 8:00 PM
+  hours_ro: Lun - Sam 09:00 - 20:00
+  map_embed_url: https://maps.google.com/maps?q=44.4693977,26.1102239&output=embed&z=17

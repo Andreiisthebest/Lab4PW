@@ -1,0 +1,9 @@
+key: hifu
+title_en: HIFU
+title_ro: HIFU
+cover: /images/HIFO.jpg
+photos:
+  - image: /images/1.jpeg
+  - image: /images/2.jpeg
+visible: true
+order: 1

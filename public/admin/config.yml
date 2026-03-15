@@ -1,0 +1,104 @@
+backend:
+  name: github
+  repo: Andreiisthebest/Lab4PW
+  branch: main
+
+# Switch to git-gateway when using Netlify Identity in production.
+publish_mode: editorial_workflow
+locale: en
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: page
+    label: Homepage Content
+    format: yaml
+    extension: yml
+    create: false
+    files:
+      - name: homepage
+        label: Homepage
+        file: src/content/homepage.yml
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Badge EN, name: badge_en, widget: string }
+              - { label: Badge RO, name: badge_ro, widget: string }
+              - { label: Title EN, name: title_en, widget: string }
+              - { label: Title RO, name: title_ro, widget: string }
+              - { label: Description EN, name: description_en, widget: text }
+              - { label: Description RO, name: description_ro, widget: text }
+              - { label: Video, name: video, widget: image }
+          - label: About
+            name: about
+            widget: object
+            fields:
+              - { label: Heading EN, name: heading_en, widget: string }
+              - { label: Heading RO, name: heading_ro, widget: string }
+              - { label: Paragraph 1 EN, name: p1_en, widget: text }
+              - { label: Paragraph 1 RO, name: p1_ro, widget: text }
+              - { label: Paragraph 2 EN, name: p2_en, widget: text }
+              - { label: Paragraph 2 RO, name: p2_ro, widget: text }
+              - { label: Image, name: image, widget: image }
+          - label: Contact
+            name: contact
+            widget: object
+            fields:
+              - { label: Address, name: address, widget: string }
+              - { label: Phone, name: phone, widget: string }
+              - { label: Email, name: email, widget: string }
+              - { label: Hours EN, name: hours_en, widget: string }
+              - { label: Hours RO, name: hours_ro, widget: string }
+              - { label: Map Embed URL, name: map_embed_url, widget: string }
+
+  - name: services
+    label: Services
+    folder: src/content/services
+    create: true
+    slug: "{{slug}}"
+    format: yaml
+    extension: yml
+    fields:
+      - { label: Key, name: key, widget: string, hint: "Used by the price panel script (example: hifu)." }
+      - { label: Title EN, name: title_en, widget: string }
+      - { label: Title RO, name: title_ro, widget: string }
+      - { label: Cover Image, name: cover, widget: image }
+      - label: Gallery Images
+        name: photos
+        widget: list
+        field: { label: Image, name: image, widget: image }
+      - { label: Show in Grid, name: visible, widget: boolean, default: true }
+      - { label: Sort Order, name: order, widget: number, value_type: int, default: 0 }
+
+  - name: team
+    label: Team
+    folder: src/content/team
+    create: true
+    slug: "{{slug}}"
+    format: yaml
+    extension: yml
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Role EN, name: role_en, widget: string }
+      - { label: Role RO, name: role_ro, widget: string }
+      - { label: Photo, name: photo, widget: image, required: false }
+      - { label: Sort Order, name: order, widget: number, value_type: int, default: 0 }
+
+  - name: testimonials
+    label: Testimonials
+    folder: src/content/testimonials
+    create: true
+    slug: "{{slug}}"
+    format: yaml
+    extension: yml
+    fields:
+      - { label: Author, name: author, widget: string }
+      - { label: Service EN, name: service_en, widget: string }
+      - { label: Service RO, name: service_ro, widget: string }
+      - { label: Quote EN, name: quote_en, widget: text }
+      - { label: Quote RO, name: quote_ro, widget: text }
+      - { label: Rating, name: rating, widget: number, value_type: int, min: 1, max: 5, default: 5 }
+      - { label: Sort Order, name: order, widget: number, value_type: int, default: 0 }
