@@ -8,27 +8,39 @@ interface ServiceItem {
 
 interface Props {
   services: ServiceItem[];
+  ui: {
+    kicker_en: string;
+    kicker_ro: string;
+    heading_en: string;
+    heading_ro: string;
+    card_cta_en: string;
+    card_cta_ro: string;
+  };
 }
 
-const { services } = Astro.props;
+const { services, ui } = Astro.props;
 ---
 
 <section class="bg-bg-light py-20 px-8" id="services">
   <div class="max-w-[1600px] mx-auto">
     <div class="text-center mb-14">
-      <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3" data-en="What We Offer" data-ro="Ce Oferim">What We Offer</span>
-      <h2 class="font-display text-[2.2rem] text-text-dark mb-4" data-en="Our Services" data-ro="Serviciile Noastre">Our Services</h2>
+      <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3" data-en={ui.kicker_en} data-ro={ui.kicker_ro}>{ui.kicker_en}</span>
+      <h2 class="font-display text-[2.2rem] text-text-dark mb-4" data-en={ui.heading_en} data-ro={ui.heading_ro}>{ui.heading_en}</h2>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
       {services.map((service) => (
-        <div class="bg-white rounded-[20px] overflow-hidden shadow-card-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col cursor-pointer" onclick={`openPricePanel('${service.key}')`}>
+        <div class="bg-white rounded-[20px] overflow-hidden shadow-card-lg hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-300 flex flex-col cursor-pointer" onclick={`openPricePanel('${service.key}')`}>
           <div class="relative overflow-hidden h-[260px] group">
             <img src={service.cover} alt={service.title_en} class="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.04]" />
+            <div class="absolute inset-0 bg-black/20 flex items-end p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span class="text-white font-bold text-[0.85rem] tracking-[0.08em] uppercase"
+                      data-en="View Prices" data-ro="Vezi Prețuri">View Prices</span>
+            </div>
           </div>
           <div class="px-6 py-5 flex items-center justify-between">
             <h3 class="text-[1.2rem] text-text-dark font-bold tracking-[0.03em]" data-en={service.title_en} data-ro={service.title_ro}>{service.title_en}</h3>
-            <button class="text-[0.8rem] text-primary font-semibold uppercase tracking-[0.05em] bg-transparent border-0 p-0 cursor-pointer" data-en="View Prices &rsaquo;" data-ro="Vezi Preturi &rsaquo;">View Prices &rsaquo;</button>
+            <button class="text-[0.8rem] text-primary font-semibold uppercase tracking-[0.05em] bg-transparent border-0 p-0 cursor-pointer" data-en={ui.card_cta_en} data-ro={ui.card_cta_ro}>{ui.card_cta_en}</button>
           </div>
         </div>
       ))}

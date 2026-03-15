@@ -8,22 +8,39 @@ interface TeamItem {
 
 interface Props {
   members: TeamItem[];
+  ui: {
+    heading_en: string;
+    heading_ro: string;
+  };
 }
 
-const { members } = Astro.props;
+const { members, ui } = Astro.props;
 ---
 
 <section class="bg-bg-light py-12 md:py-20 px-4 md:px-8" id="team">
   <div class="max-w-[1600px] mx-auto">
     <div class="text-center mb-14">
-      <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark mb-4" data-en="Our Team" data-ro="Echipa Noastra">Our Team</h2>
+        <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3"
+              data-en="The People Behind Your Beauty" data-ro="Oamenii Din Spatele Frumuseții">The People Behind Your Beauty</span>
+      <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark mb-4" data-en={ui.heading_en} data-ro={ui.heading_ro}>{ui.heading_en}</h2>
+        <p class="text-text-light max-w-[560px] mx-auto leading-[1.8] text-[0.92rem] md:text-base"
+           data-en="Meet our talented and certified specialists dedicated to your care."
+           data-ro="Cunoașteți specialiștii noștri talentați și certificați, dedicați îngrijirii dumneavoastră.">Meet our talented and certified specialists dedicated to your care.</p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
       {members.map((member) => (
-        <div class="bg-white rounded-[20px] p-8 text-center shadow-card transition-transform duration-300 hover:-translate-y-1.5">
-          <img src={member.photo ?? '/images/16.png'} alt={member.name} class="w-[160px] h-[160px] rounded-full object-cover mx-auto mb-5 border-4 border-primary" />
-          <h3 class="text-[1.2rem] font-bold text-text-dark mb-1" data-en={member.name} data-ro={member.name}>{member.name}</h3>
-          <p class="text-primary text-[0.95rem] mb-4" data-en={member.role_en} data-ro={member.role_ro}>{member.role_en}</p>
+        <div class="bg-white rounded-[16px] overflow-hidden shadow-card text-center hover:-translate-y-1 transition-transform duration-300">
+            {member.photo ? (
+                <img src={member.photo} alt={member.name} class="w-full aspect-[3/4] object-cover border-b-2 border-dashed border-primary" />
+            ) : (
+                <div class="w-full aspect-[3/4] bg-secondary border-b-2 border-dashed border-primary flex flex-col items-center justify-center gap-2 text-primary text-[0.78rem]">
+                    <span class="text-[2rem]">🖼</span><span>Team Photo</span>
+                </div>
+            )}
+            <div class="p-5">
+                <h3 class="font-display text-[1rem] text-text-dark mb-1">{member.name}</h3>
+                <span class="text-[0.85rem] text-primary" data-en={member.role_en} data-ro={member.role_ro}>{member.role_en}</span>
+            </div>
         </div>
       ))}
     </div>

@@ -53,6 +53,58 @@ collections:
               - { label: Hours EN, name: hours_en, widget: string }
               - { label: Hours RO, name: hours_ro, widget: string }
               - { label: Map Embed URL, name: map_embed_url, widget: string }
+          - label: UI Labels
+            name: ui
+            widget: object
+            fields:
+              - label: Hero
+                name: hero
+                widget: object
+                fields:
+                  - { label: Primary CTA EN, name: cta_primary_en, widget: string }
+                  - { label: Primary CTA RO, name: cta_primary_ro, widget: string }
+                  - { label: Secondary CTA EN, name: cta_secondary_en, widget: string }
+                  - { label: Secondary CTA RO, name: cta_secondary_ro, widget: string }
+              - label: Services
+                name: services
+                widget: object
+                fields:
+                  - { label: Kicker EN, name: kicker_en, widget: string }
+                  - { label: Kicker RO, name: kicker_ro, widget: string }
+                  - { label: Heading EN, name: heading_en, widget: string }
+                  - { label: Heading RO, name: heading_ro, widget: string }
+                  - { label: Card CTA EN, name: card_cta_en, widget: string }
+                  - { label: Card CTA RO, name: card_cta_ro, widget: string }
+              - label: Team
+                name: team
+                widget: object
+                fields:
+                  - { label: Heading EN, name: heading_en, widget: string }
+                  - { label: Heading RO, name: heading_ro, widget: string }
+              - label: Testimonials
+                name: testimonials
+                widget: object
+                fields:
+                  - { label: Heading EN, name: heading_en, widget: string }
+                  - { label: Heading RO, name: heading_ro, widget: string }
+              - label: Booking
+                name: booking
+                widget: object
+                fields:
+                  - { label: Heading EN, name: heading_en, widget: string }
+                  - { label: Heading RO, name: heading_ro, widget: string }
+                  - { label: Name Placeholder EN, name: name_placeholder_en, widget: string }
+                  - { label: Name Placeholder RO, name: name_placeholder_ro, widget: string }
+                  - { label: Phone Placeholder EN, name: phone_placeholder_en, widget: string }
+                  - { label: Phone Placeholder RO, name: phone_placeholder_ro, widget: string }
+                  - { label: Button EN, name: button_en, widget: string }
+                  - { label: Button RO, name: button_ro, widget: string }
+              - label: Contact
+                name: contact
+                widget: object
+                fields:
+                  - { label: Heading EN (supports HTML), name: heading_en, widget: text }
+                  - { label: Heading RO (supports HTML), name: heading_ro, widget: text }
 
   - name: services
     label: Services

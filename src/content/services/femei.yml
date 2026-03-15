@@ -1,0 +1,9 @@
+key: femei
+title_en: For Women
+title_ro: Pentru Femei
+cover: /images/for_women.jpg
+photos:
+  - image: /images/3.jpeg
+  - image: /images/4.jpeg
+visible: true
+order: 2

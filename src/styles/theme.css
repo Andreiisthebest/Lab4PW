@@ -9,7 +9,4 @@
   --shadow-card-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
-body {
-  background: var(--color-bg-light);
-  color: var(--color-text-dark);
-}
+

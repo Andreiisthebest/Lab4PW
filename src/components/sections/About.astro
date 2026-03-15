@@ -21,9 +21,9 @@ const { about } = Astro.props;
         <img src={about.image} alt="SVET MEDICAL Salon" class="w-full rounded-[20px] shadow-card-lg block object-cover" />
       </div>
       <div>
-        <h2 class="font-display text-[1.6rem] md:text-[2rem] text-text-dark leading-[1.3] mb-6" data-en={about.heading_en} data-ro={about.heading_ro}>{about.heading_en}</h2>
-        <p class="text-text-light leading-[1.8] mb-5" data-en={about.p1_en} data-ro={about.p1_ro}>{about.p1_en}</p>
-        <p class="text-text-light leading-[1.8] mb-5" data-en={about.p2_en} data-ro={about.p2_ro}>{about.p2_en}</p>
+        <h2 class="font-display text-[1.6rem] md:text-[2rem] text-text-dark leading-[1.3] mb-6" data-en={about.heading_en} data-ro={about.heading_ro} set:html={about.heading_en}></h2>
+        <p class="text-text-light leading-[1.8] mb-5" data-en={about.p1_en} data-ro={about.p1_ro} set:html={about.p1_en}></p>
+        <p class="text-text-light leading-[1.8] mb-5" data-en={about.p2_en} data-ro={about.p2_ro} set:html={about.p2_en}></p>
       </div>
     </div>
   </div>

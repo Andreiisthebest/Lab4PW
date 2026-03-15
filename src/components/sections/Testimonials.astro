@@ -3,25 +3,41 @@ interface TestimonialItem {
   quote_en: string;
   quote_ro: string;
   author: string;
+  service_en?: string;
+  service_ro?: string;
+  rating?: number;
 }
 
 interface Props {
   testimonials: TestimonialItem[];
+  ui: {
+    heading_en: string;
+    heading_ro: string;
+  };
 }
 
-const { testimonials } = Astro.props;
+const { testimonials, ui } = Astro.props;
 ---
 
 <section class="bg-white py-12 md:py-20 px-4 md:px-8">
   <div class="max-w-[1600px] mx-auto">
     <div class="text-center mb-14">
-      <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark" data-en="What Our Clients Say" data-ro="Ce Spun Clientii Nostri">What Our Clients Say</h2>
+        <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3"
+              data-en="Client Stories" data-ro="Poveștile Clienților">Client Stories</span>
+      <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark" data-en={ui.heading_en} data-ro={ui.heading_ro}>{ui.heading_en}</h2>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {testimonials.map((item) => (
-        <div class="bg-bg-light p-8 rounded-[20px] shadow-card-lift">
-          <p class="text-text-light mb-4" data-en={item.quote_en} data-ro={item.quote_ro}>{item.quote_en}</p>
-          <h4 class="text-text-dark font-semibold" data-en={`- ${item.author}`} data-ro={`- ${item.author}`}>{`- ${item.author}`}</h4>
+        <div class="bg-bg-light rounded-[16px] p-8 shadow-card">
+            <div class="text-primary text-[1.1rem] mb-4">{"★".repeat(item.rating || 5)}</div>
+            <p class="text-text-light leading-[1.8] italic mb-6" data-en={item.quote_en} data-ro={item.quote_ro}>{item.quote_en}</p>
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-full bg-secondary border-2 border-dashed border-primary flex items-center justify-center text-[0.6rem] font-bold text-primary flex-shrink-0">PH</div>
+                <div>
+                    <div class="font-semibold text-text-dark text-[0.9rem]">{item.author}</div>
+                    <div class="text-[0.8rem] text-text-light" data-en={item.service_en} data-ro={item.service_ro}>{item.service_en}</div>
+                </div>
+            </div>
         </div>
       ))}
     </div>

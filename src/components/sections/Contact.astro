@@ -8,16 +8,20 @@ interface Props {
     hours_ro: string;
     map_embed_url: string;
   };
+  ui: {
+    heading_en: string;
+    heading_ro: string;
+  };
 }
 
-const { contact } = Astro.props;
+const { contact, ui } = Astro.props;
 ---
 
 <section class="bg-bg-light py-12 md:py-20 px-4 md:px-8" id="contact">
   <div class="max-w-[1600px] mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
       <div>
-        <h2 class="font-display text-[1.6rem] md:text-[2rem] text-text-dark mb-6" data-en="Find Us at<br><span class='text-primary'>SVET MEDICAL</span>" data-ro="Ne gasesti la<br><span class='text-primary'>SVET MEDICAL</span>">Find Us at<br /><span class="text-primary">SVET MEDICAL</span></h2>
+        <h2 class="font-display text-[1.6rem] md:text-[2rem] text-text-dark mb-6" data-en={ui.heading_en} data-ro={ui.heading_ro} set:html={ui.heading_en}></h2>
         <p class="text-text-light text-[0.9rem] mb-3" data-en={contact.address} data-ro={contact.address}>{contact.address}</p>
         <p class="text-text-light text-[0.9rem] mb-3">{contact.phone}</p>
         <p class="text-text-light text-[0.9rem] mb-3">{contact.email}</p>

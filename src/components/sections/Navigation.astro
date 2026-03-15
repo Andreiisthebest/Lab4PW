@@ -21,9 +21,20 @@
       <li class="mobile-close-nav hidden"><button onclick="toggleMobileNav()" class="bg-transparent border-0 text-[2rem] cursor-pointer text-text-dark leading-none">&times;</button></li>
     </ul>
 
-    <div id="lang-switcher-el" class="hidden md:flex ml-6 border border-primary rounded-full overflow-hidden">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('ro')">RO</button>
+    <div class="hidden lg:flex items-center gap-6 ml-6">
+        <div class="flex items-center gap-3">
+            <a href="#" class="text-text-dark hover:text-primary transition-colors text-[1.1rem] leading-none no-underline flex items-center" aria-label="Instagram">
+                <span class="font-bold flex items-center justify-center w-8 h-8 rounded-full bg-secondary/50">ig</span>
+            </a>
+            <a href="#" class="text-text-dark hover:text-primary transition-colors text-[1.1rem] leading-none no-underline flex items-center" aria-label="Facebook">
+                <span class="font-bold flex items-center justify-center w-8 h-8 rounded-full bg-secondary/50">f</span>
+            </a>
+        </div>
+        <div class="w-[1px] h-6 bg-[#eaeaea]"></div>
+        <div id="lang-switcher-el" class="lang-switcher border border-primary rounded-full overflow-hidden flex">
+            <button class="lang-btn active" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('ro')">RO</button>
+        </div>
     </div>
   </div>
 </nav>

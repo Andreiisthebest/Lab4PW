@@ -36,15 +36,15 @@ const priceData = Object.fromEntries(
 
 <BaseLayout title="SVET MEDICAL - Beauty Salon">
   <Navigation />
-  <Hero hero={homepage.hero} />
+  <Hero hero={homepage.hero} ui={homepage.ui.hero} />
   <MobilePromo />
   <About about={homepage.about} />
-  <Services services={services} />
+  <Services services={services} ui={homepage.ui.services} />
   <Gallery />
-  <Team members={team} />
-  <Testimonials testimonials={testimonials} />
-  <Booking />
-  <Contact contact={homepage.contact} />
+  <Team members={team} ui={homepage.ui.team} />
+  <Testimonials testimonials={testimonials} ui={homepage.ui.testimonials} />
+  <Booking ui={homepage.ui.booking} />
+  <Contact contact={homepage.contact} ui={homepage.ui.contact} />
   <Footer />
 
   <Modals />

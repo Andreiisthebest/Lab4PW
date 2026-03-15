@@ -29,6 +29,44 @@ export interface HomepageContent {
     hours_ro: string;
     map_embed_url: string;
   };
+  ui: {
+    hero: {
+      cta_primary_en: string;
+      cta_primary_ro: string;
+      cta_secondary_en: string;
+      cta_secondary_ro: string;
+    };
+    services: {
+      kicker_en: string;
+      kicker_ro: string;
+      heading_en: string;
+      heading_ro: string;
+      card_cta_en: string;
+      card_cta_ro: string;
+    };
+    team: {
+      heading_en: string;
+      heading_ro: string;
+    };
+    testimonials: {
+      heading_en: string;
+      heading_ro: string;
+    };
+    booking: {
+      heading_en: string;
+      heading_ro: string;
+      name_placeholder_en: string;
+      name_placeholder_ro: string;
+      phone_placeholder_en: string;
+      phone_placeholder_ro: string;
+      button_en: string;
+      button_ro: string;
+    };
+    contact: {
+      heading_en: string;
+      heading_ro: string;
+    };
+  };
 }
 
 export interface ServiceItem {

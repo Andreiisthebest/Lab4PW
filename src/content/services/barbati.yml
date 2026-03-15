@@ -1,0 +1,9 @@
+key: barbati
+title_en: For Men
+title_ro: Pentru Bărbați
+cover: /images/for_men.jpg
+photos:
+  - image: /images/6.jpeg
+  - image: /images/7.jpeg
+visible: true
+order: 4

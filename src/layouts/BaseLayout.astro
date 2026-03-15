@@ -23,8 +23,8 @@ const { title = 'SVET MEDICAL - Beauty Salon' } = Astro.props;
       rel="stylesheet"
     />
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
+    <script is:inline src="https://cdn.tailwindcss.com"></script>
+    <script is:inline>
       tailwind.config = {
         theme: {
           extend: {

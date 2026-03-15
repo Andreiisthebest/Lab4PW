@@ -1,11 +1,96 @@
 <div class="mascot-widget" id="mascot" role="img" aria-label="Stella, SVET MEDICAL mascot">
-  <svg viewBox="0 0 90 150" width="88" height="150" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="45" cy="45" r="30" fill="#fcd5b0" />
-    <circle cx="35" cy="42" r="4" fill="#2c2c2c" />
-    <circle cx="55" cy="42" r="4" fill="#2c2c2c" />
-    <path d="M35,58 Q45,66 55,58" stroke="#d45570" stroke-width="3" fill="none" stroke-linecap="round" />
-    <rect x="20" y="75" width="50" height="65" rx="18" fill="#fdf8f2" stroke="#e0d6ea" />
-  </svg>
-  <span class="mascot-label">Stella</span>
-  <div class="mascot-bubble" id="mascot-bubble"><strong>Hi, I'm Stella!</strong> Welcome to SVET MEDICAL.</div>
+    <svg viewBox="-12 0 114 165" width="88" height="165" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Hair -->
+        <ellipse cx="45" cy="44" rx="30" ry="25" fill="#5a2d1e"/>
+        <ellipse cx="17" cy="58" rx="9" ry="19" fill="#5a2d1e"/>
+        <ellipse cx="73" cy="58" rx="9" ry="19" fill="#5a2d1e"/>
+
+        <!-- Tiara -->
+        <rect x="23" y="21" width="44" height="6" rx="3" fill="#c9a96e"/>
+        <polygon points="32,21 36,10 40,21" fill="#c9a96e"/>
+        <polygon points="43,21 47,5  51,21" fill="#c9a96e"/>
+        <polygon points="54,21 58,10 62,21" fill="#c9a96e"/>
+        <circle cx="47" cy="6"  r="3"   fill="#f3e9d2"/>
+        <circle cx="36" cy="11" r="2"   fill="#f3e9d2"/>
+        <circle cx="58" cy="11" r="2"   fill="#f3e9d2"/>
+
+        <!-- Face -->
+        <circle cx="45" cy="56" r="30" fill="#fcd5b0"/>
+
+        <!-- Eyebrows -->
+        <path d="M32,46 Q37,42 42,46" stroke="#5a2d1e" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M48,46 Q53,42 58,46" stroke="#5a2d1e" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+        <!-- Eyes -->
+        <circle cx="37" cy="53" r="5"   fill="#2c2c2c"/>
+        <circle cx="53" cy="53" r="5"   fill="#2c2c2c"/>
+        <circle cx="39" cy="51" r="1.8" fill="white"/>
+        <circle cx="55" cy="51" r="1.8" fill="white"/>
+
+        <!-- Blush -->
+        <ellipse cx="29" cy="62" rx="6"   ry="3.5" fill="#f4a0b0" opacity="0.55"/>
+        <ellipse cx="61" cy="62" rx="6"   ry="3.5" fill="#f4a0b0" opacity="0.55"/>
+
+        <!-- Nose -->
+        <circle cx="45" cy="60" r="2" fill="#e8a585" opacity="0.7"/>
+
+        <!-- Smile -->
+        <path d="M37,68 Q45,76 53,68" stroke="#d45570" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Neck (behind body) -->
+        <rect x="39" y="84" width="12" height="9" fill="#fcd5b0"/>
+
+        <!-- Body / Lab coat — drawn before arms so arms sit on top -->
+        <path d="M14,133 Q14,93 45,93 Q76,93 76,133 L72,158 L18,158 Z" fill="#fdf8f2" stroke="#e0d6ea" stroke-width="1.5"/>
+
+        <!-- Collar -->
+        <path d="M35,93 L45,114 L55,93" fill="#c9a96e" opacity="0.75"/>
+
+        <!-- Medical cross -->
+        <rect x="41" y="122" width="8"  height="22" rx="2.5" fill="#c9a96e" opacity="0.28"/>
+        <rect x="34" y="129" width="22" height="8"  rx="2.5" fill="#c9a96e" opacity="0.28"/>
+
+        <!-- Right arm — on top of body -->
+        <path d="M72,102 Q87,120 83,140" stroke="#fcd5b0" stroke-width="12" stroke-linecap="round" fill="none"/>
+
+        <!-- Left arm + wand — on top of body, pivot at shoulder (18,102) -->
+        <g id="mascot-wand-arm">
+            <!-- Arm from shoulder down to hand -->
+            <path d="M18,102 Q4,112 10,128" stroke="#fcd5b0" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <!-- Wand stick: from hand upward to star tip -->
+            <line x1="10" y1="128" x2="0" y2="88" stroke="#c9a96e" stroke-width="3.5" stroke-linecap="round"/>
+            <!-- Wand star at the TIP (top) of the wand -->
+            <g transform="translate(0,88)">
+                <polygon points="0,-9 2.5,-2.8 9.5,-2.7 4,1.8 5.5,8.5 0,5 -5.5,8.5 -4,1.8 -9.5,-2.7 -2.5,-2.8" fill="#c9a96e"/>
+                <polygon points="0,-6 1.7,-1.9 6,-1.8 2.7,1.2 3.8,5.6 0,3.4 -3.8,5.6 -2.7,1.2 -6,-1.8 -1.7,-1.9" fill="#f3e9d2"/>
+            </g>
+            <animateTransform attributeName="transform" type="rotate"
+                values="0 18 102; -18 18 102; 14 18 102; 0 18 102"
+                keyTimes="0; 0.25; 0.75; 1"
+                dur="1.8s" repeatCount="indefinite"/>
+        </g>
+
+        <!-- Shoulder patches — painted last to cleanly hide the arm/body seam -->
+        <circle cx="18" cy="103" r="7" fill="#fdf8f2"/>
+        <circle cx="72" cy="103" r="7" fill="#fdf8f2"/>
+
+        <!-- Sparkles -->
+        <g id="mascot-sparkles" stroke="#c9a96e" fill="#c9a96e">
+            <circle cx="79" cy="88" r="2.2"/>
+            <line x1="79" y1="82" x2="79" y2="94" stroke-width="1.5"/>
+            <line x1="73" y1="88" x2="85" y2="88" stroke-width="1.5"/>
+            <circle cx="14" cy="78" r="1.6"/>
+            <line x1="14" y1="73" x2="14" y2="83" stroke-width="1.2"/>
+            <line x1="9"  y1="78" x2="19" y2="78" stroke-width="1.2"/>
+        </g>
+
+    </svg>
+    <span class="mascot-label" data-en="Stella ✨" data-ro="Stella ✨">Stella &#10024;</span>
+
+    <!-- Speech bubble (message cycles on each hover) -->
+    <div class="mascot-bubble" id="mascot-bubble">
+        <strong data-en="Hi, I'm Stella! ✨" data-ro="Bună, sunt Stella! ✨">Hi, I'm Stella! ✨</strong>
+        <span data-en="Welcome to SVET MEDICAL — where beauty meets science." data-ro="Bine ai venit la SVET MEDICAL — unde frumusețea întâlnește știința.">Welcome to SVET MEDICAL — where beauty meets science.</span>
+    </div>
 </div>

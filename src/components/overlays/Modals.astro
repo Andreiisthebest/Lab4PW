@@ -11,9 +11,22 @@
   </div>
   <img class="w-full h-[180px] object-cover block" id="pp-cover" src="" alt="" />
   <div class="px-7 py-5 flex-1"><div id="pp-photos" class="flex flex-col gap-4"></div></div>
+  <a href="#booking" class="mx-7 mb-8 block text-center bg-primary text-white font-bold text-[0.95rem] tracking-[0.06em] uppercase py-[0.9rem] rounded-[10px] no-underline hover:bg-primary-dark transition-colors"
+     onclick="closePricePanel()" data-en="Book an Appointment" data-ro="Programează-te">Book an Appointment</a>
 </aside>
 
 <div class="video-lightbox" id="video-lightbox" onclick="closeVideoLightboxOnBg(event)">
   <button class="fixed top-5 right-6 text-white text-[2rem] bg-transparent border-none cursor-pointer z-[10000] opacity-80 hover:opacity-100 transition-opacity leading-none" onclick="closeVideoLightbox()">&times;</button>
   <video id="lightbox-video" controls autoplay playsinline class="max-w-[90vw] max-h-[85vh] rounded-[16px] shadow-[0_8px_40px_rgba(0,0,0,0.6)]"></video>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <button class="fixed top-5 right-6 text-white text-[2rem] bg-transparent border-none cursor-pointer leading-none z-[10000] opacity-80 hover:opacity-100 transition-opacity" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-arrow fixed top-1/2 -translate-y-1/2 left-4 bg-white/15 border-none text-white text-[2rem] w-[52px] h-[52px] rounded-full cursor-pointer z-[10000] hover:bg-white/30 transition-colors flex items-center justify-center" onclick="lightboxNav(-1)">&#8249;</button>
+    <div class="relative max-w-[90vw] max-h-[85vh] flex items-center justify-center">
+        <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[80vh] object-contain rounded-[12px] shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
+    </div>
+    <button class="lightbox-arrow fixed top-1/2 -translate-y-1/2 right-4 bg-white/15 border-none text-white text-[2rem] w-[52px] h-[52px] rounded-full cursor-pointer z-[10000] hover:bg-white/30 transition-colors flex items-center justify-center" onclick="lightboxNav(1)">&#8250;</button>
+    <div class="text-white/70 text-[0.85rem] mt-4 tracking-[0.1em]" id="lightbox-counter"></div>
 </div>

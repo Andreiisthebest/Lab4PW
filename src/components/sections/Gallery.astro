@@ -1,16 +1,25 @@
 <section class="bg-white py-12 md:py-20 px-4 md:px-8" id="gallery">
   <div class="max-w-[1600px] mx-auto">
     <div class="text-center mb-14">
-      <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3" data-en="Our Work" data-ro="Munca Noastra">Our Work</span>
+      <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3" data-en="Our Work" data-ro="Munca Noastră">Our Work</span>
       <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark mb-4" data-en="Gallery" data-ro="Galerie">Gallery</h2>
+      <p class="text-text-light max-w-[560px] mx-auto leading-[1.8] text-[0.92rem] md:text-base" data-en="A glimpse into the transformations and experiences at SVET MEDICAL." data-ro="O privire asupra transformărilor și experiențelor de la SVET MEDICAL.">A glimpse into the transformations and experiences at SVET MEDICAL.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="relative bg-[#111] rounded-[12px] overflow-hidden aspect-video cursor-pointer group" onclick="openVideoLightbox('/images/video4.mp4')">
         <video src="/images/video4.mp4" muted preload="metadata" class="w-full h-full object-cover block pointer-events-none"></video>
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/35 gap-2 transition-colors duration-300 group-hover:bg-black/15">
+            <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center text-[1.4rem] text-primary-dark transition-transform duration-200 group-hover:scale-110">&#9654;</div>
+            <span class="text-white text-[0.8rem] font-semibold tracking-[0.08em] uppercase" data-en="Watch Video" data-ro="Vezi Video">Watch Video</span>
+        </div>
       </div>
       <div class="relative bg-[#111] rounded-[12px] overflow-hidden aspect-video cursor-pointer group" onclick="openVideoLightbox('/images/video5.mp4')">
         <video src="/images/video5.mp4" muted preload="metadata" class="w-full h-full object-cover block pointer-events-none"></video>
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/35 gap-2 transition-colors duration-300 group-hover:bg-black/15">
+            <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center text-[1.4rem] text-primary-dark transition-transform duration-200 group-hover:scale-110">&#9654;</div>
+            <span class="text-white text-[0.8rem] font-semibold tracking-[0.08em] uppercase" data-en="Watch Video" data-ro="Vezi Video">Watch Video</span>
+        </div>
       </div>
     </div>
   </div>
