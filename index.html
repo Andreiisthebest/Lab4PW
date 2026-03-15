@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVET MEDICAL - Beauty Salon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="reset.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary:   '#c9a96e',
+                        'primary-dark': '#a07840',
+                        secondary: '#f3e9d2',
+                        'text-dark':  '#2c2c2c',
+                        'text-light': '#7a7a7a',
+                        'bg-light':   '#fdf8f2',
+                    },
+                    fontFamily: {
+                        sans:    ['Inter', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    boxShadow: {
+                        'card':    '0 4px 6px rgba(0,0,0,0.08)',
+                        'card-lg': '0 10px 30px rgba(0,0,0,0.12)',
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                    },
+                    maxWidth: {
+                        'container': '1600px',
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        /* ── Base resets ───────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; }
+        body  { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        /* ── Shared button components ──────────────── */
+        .btn-primary {
+            background: #c9a96e; color: #fff;
+            padding: 0.85rem 2rem; border-radius: 30px;
+            font-weight: 600; font-size: 0.95rem;
+            border: 2px solid #c9a96e;
+            transition: background 0.3s, transform 0.2s;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-primary:hover  { background: #a07840; border-color: #a07840; transform: translateY(-2px); }
+
+        .btn-outline {
+            background: transparent; color: #c9a96e;
+            padding: 0.85rem 2rem; border-radius: 30px;
+            font-weight: 600; font-size: 0.95rem;
+            border: 2px solid #c9a96e;
+            transition: background 0.3s, color 0.3s, transform 0.2s;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-outline:hover { background: #c9a96e; color: #fff; transform: translateY(-2px); }
+
+        /* ── Language switcher ─────────────────────── */
+        .lang-btn { background: none; border: none; padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; color: #c9a96e; letter-spacing: 0.05em; transition: background 0.2s, color 0.2s; }
+        .lang-btn.active { background: #c9a96e; color: #fff; }
+
+        /* ── Mobile nav open overlay (body class toggled by JS) ── */
+        .mobile-nav-open #nav-toggle span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .mobile-nav-open #nav-toggle span:nth-child(2) { opacity: 0; }
+        .mobile-nav-open #nav-toggle span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .mobile-nav-open #nav-links {
+            display: flex !important; flex-direction: column; position: fixed; inset: 0;
+            background: white; z-index: 1050; align-items: center; justify-content: center;
+            gap: 2rem; font-size: 1.2rem; list-style: none; margin: 0; padding: 0;
+        }
+        .mobile-nav-open #lang-switcher-el {
+            display: flex !important; position: fixed; bottom: 3rem; left: 50%;
+            transform: translateX(-50%); z-index: 1050;
+            border: 1.5px solid #c9a96e; border-radius: 20px; overflow: hidden;
+        }
+
+        /* ── Price panel (right-slide transition — not possible in Tailwind) ── */
+        .price-panel-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 9000; }
+        .price-panel-backdrop.active { display: block; }
+        .price-panel {
+            position: fixed; top: 0; right: -520px; width: min(500px,100vw); height: 100vh;
+            background: #fff; z-index: 9001; overflow-y: auto;
+            transition: right 0.35s cubic-bezier(.4,0,.2,1);
+            display: flex; flex-direction: column;
+        }
+        .price-panel.open { right: 0; }
+        @media (max-width: 768px) { .price-panel { width: 100vw; right: -100vw; } }
+
+        /* ── Overlay active states (display toggled by JS via .active) ── */
+        .price-zoom-overlay  { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.96); z-index: 10000; align-items: center; justify-content: center; padding: 1.5rem; }
+        .price-zoom-overlay.active  { display: flex; }
+        .lightbox-overlay    { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; flex-direction: column; }
+        .lightbox-overlay.active    { display: flex; }
+        .video-lightbox      { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.94); z-index: 9999; align-items: center; justify-content: center; }
+        .video-lightbox.active      { display: flex; }
+
+        /* ── Mascot – Stella ───────────────────────── */
+        .mascot-widget {
+            position: fixed; bottom: 2rem; right: 1.5rem; z-index: 8000;
+            display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+            cursor: pointer; user-select: none;
+            opacity: 0; transform: translateX(140px); pointer-events: none;
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .mascot-widget.mascot-visible {
+            opacity: 1; transform: translateX(0); pointer-events: auto;
+            animation: mascot-float 2.6s ease-in-out infinite;
+        }
+        .mascot-widget.mascot-visible svg { animation: mascot-tilt 3.2s ease-in-out infinite alternate; transform-origin: center bottom; }
+        #mascot-sparkles { animation: mascot-sparkle 2s ease-in-out infinite alternate; }
+        @keyframes mascot-float {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            40%       { transform: translateX(0) translateY(-10px); }
+            60%       { transform: translateX(0) translateY(-7px); }
+        }
+        @keyframes mascot-tilt  { 0% { transform: rotate(-5deg); } 100% { transform: rotate(5deg); } }
+        @keyframes mascot-sparkle {
+            0%   { opacity: 1;   transform: scale(1);    }
+            50%  { opacity: 0.3; transform: scale(0.75); }
+            100% { opacity: 1;   transform: scale(1.15); }
+        }
+        .mascot-widget svg  { filter: drop-shadow(0 6px 18px rgba(201,169,110,0.35)); display: block; }
+        .mascot-label {
+            font-family: 'Playfair Display', serif; font-size: 0.72rem; font-weight: 700;
+            color: #c9a96e; letter-spacing: 0.08em; text-align: center;
+            text-shadow: 0 1px 4px rgba(255,255,255,0.9);
+        }
+        .mascot-bubble {
+            position: absolute; bottom: calc(100% + 14px); right: 0; width: 190px;
+            background: #fff; border: 2px solid #c9a96e; border-radius: 14px;
+            padding: 0.65rem 0.85rem; font-size: 0.82rem; line-height: 1.45; color: #2c2c2c;
+            font-family: 'Inter', sans-serif; box-shadow: 0 6px 24px rgba(201,169,110,0.22);
+            pointer-events: none; opacity: 0;
+            transform: translateY(8px) scale(0.92); transform-origin: bottom right;
+            transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .mascot-bubble::after  { content: ''; position: absolute; bottom: -10px; right: 22px; border-left: 9px solid transparent; border-right: 9px solid transparent; border-top: 10px solid #c9a96e; }
+        .mascot-bubble::before { content: ''; position: absolute; bottom: -7px;  right: 24px; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 8px solid #fff; z-index: 1; }
+        .mascot-bubble strong  { display: block; font-size: 0.88rem; color: #c9a96e; margin-bottom: 0.2rem; }
+        .mascot-widget:hover .mascot-bubble { opacity: 1; transform: translateY(0) scale(1); }
+        @media (max-width: 768px) {
+            .mascot-widget     { bottom: calc(72px + 1rem); right: 0.75rem; }
+            .mascot-widget svg { width: 64px; height: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full bg-white shadow-card z-[1000] font-sans">
+        <div class="max-w-[1600px] mx-auto px-8 py-3 md:py-4 flex justify-between items-center">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <img src="images/logo.jpeg" alt="SVET MEDICAL Logo" class="h-[50px] md:h-[80px] w-auto block object-contain">
+                <div class="text-[1.1rem] md:text-[1.4rem] font-bold tracking-[0.08em] text-text-dark">SVET <span class="text-primary">MEDICAL</span></div>
+            </div>
+
+            <!-- Hamburger (mobile only) -->
+            <button id="nav-toggle" aria-label="Toggle navigation" onclick="toggleMobileNav()"
+                class="flex md:hidden flex-col gap-[5px] bg-transparent border-0 cursor-pointer p-1.5 ml-auto z-[1100]">
+                <span class="block w-6 h-[2px] bg-text-dark rounded transition-all duration-300"></span>
+                <span class="block w-6 h-[2px] bg-text-dark rounded transition-all duration-300"></span>
+                <span class="block w-6 h-[2px] bg-text-dark rounded transition-all duration-300"></span>
+            </button>
+
+            <!-- Nav links -->
+            <ul id="nav-links" class="hidden md:flex gap-8 items-center list-none m-0 p-0">
+                <li><a href="#about" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="About" data-ro="Despre">About</a></li>
+                <li><a href="#services" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="Services" data-ro="Servicii">Services</a></li>
+                <li><a href="#gallery" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="Gallery" data-ro="Galerie">Gallery</a></li>
+                <li><a href="#team" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="Our Team" data-ro="Echipa">Our Team</a></li>
+                <li><a href="#contact" class="text-text-dark font-medium text-[0.95rem] tracking-[0.03em] no-underline transition-colors duration-300 hover:text-primary" data-en="Contact" data-ro="Contact">Contact</a></li>
+                <li><a href="#booking" class="bg-primary text-white px-[1.4rem] py-[0.6rem] rounded-full font-semibold text-[0.95rem] no-underline transition-all duration-300 hover:bg-primary-dark hover:-translate-y-0.5" data-en="Book Now" data-ro="Programare">Book Now</a></li>
+                <li class="mobile-close-nav hidden"><button onclick="toggleMobileNav()" class="bg-transparent border-0 text-[2rem] cursor-pointer text-text-dark leading-none">&times;</button></li>
+            </ul>
+
+            <!-- Language switcher -->
+            <div id="lang-switcher-el" class="hidden md:flex ml-6 border border-primary rounded-full overflow-hidden">
+                <button class="lang-btn active" onclick="setLang('en')">EN</button>
+                <button class="lang-btn" onclick="setLang('ro')">RO</button>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="mt-[74px] md:mt-[74px] h-auto md:h-[calc(100vh-74px)] flex items-stretch bg-bg-light overflow-hidden">
+        <div class="flex flex-col md:flex-row items-center w-full">
+
+            <!-- Text side -->
+            <div class="flex-[1.2] flex flex-col justify-center items-start px-6 py-10 md:p-16">
+                <div class="w-full max-w-[480px]">
+                    <p class="text-[0.78rem] md:text-[0.85rem] tracking-[0.2em] uppercase text-primary font-semibold mb-4"
+                       data-en="Premium Beauty &amp; Medical Aesthetics" data-ro="Frumusețe Premium &amp; Estetică Medicală">Premium Beauty &amp; Medical Aesthetics</p>
+                    <h1 class="font-display text-[2rem] md:text-[3.2rem] leading-[1.2] md:leading-[1.15] text-text-dark mb-6"
+                        data-en="Your Beauty,<br>Our <span class='text-primary'>Expertise</span>"
+                        data-ro="Frumusețea Ta,<br><span class='text-primary'>Expertiza</span> Noastră">Your Beauty,<br>Our <span class="text-primary">Expertise</span></h1>
+                    <p class="text-[0.95rem] md:text-[1.1rem] text-text-light leading-[1.8] mb-10"
+                       data-en="At SVET MEDICAL we blend cutting-edge medical aesthetics with luxurious beauty treatments, tailored exclusively for you."
+                       data-ro="La SVET MEDICAL îmbinăm estetica medicală de ultimă generație cu tratamente de frumusețe luxoase, concepute exclusiv pentru tine.">At SVET MEDICAL we blend cutting-edge medical aesthetics with luxurious beauty treatments, tailored exclusively for you.</p>
+                    <div class="flex gap-4 flex-wrap">
+                        <a href="#booking" class="btn-primary" data-en="Book an Appointment" data-ro="Fă o Programare">Book an Appointment</a>
+                        <a href="#services" class="btn-outline" data-en="View Services" data-ro="Vezi Serviciile">View Services</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video/image side -->
+            <div class="flex-[0.8] flex items-center justify-center px-6 pb-10 md:py-12 md:pr-16 md:pl-8 bg-bg-light w-full">
+                <video class="w-full h-full object-cover rounded-[28px] shadow-[0_20px_60px_rgba(0,0,0,0.18)] block max-h-[55vw] md:max-h-full" autoplay loop muted playsinline>
+                    <source src="images/video3.mp4" type="video/mp4">
+                </video>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MOBILE-ONLY: Quick Highlights & Promo -->
+    <section class="md:hidden bg-secondary px-4 py-8">
+        <div class="max-w-[1600px] mx-auto">
+            <h2 class="font-display text-[1.5rem] text-text-dark text-center mb-5"
+                data-en="Why Choose Us?" data-ro="De Ce Noi?">Why Choose Us?</h2>
+
+            <!-- Scrollable stats row -->
+            <div class="flex gap-3 overflow-x-auto pb-2 mb-6 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div class="flex-shrink-0 bg-white rounded-2xl p-5 text-center min-w-[110px] shadow-card">
+                    <div class="text-[1.6rem] mb-1">⭐</div>
+                    <div class="text-[1.5rem] font-bold text-primary leading-tight">10+</div>
+                    <div class="text-[0.75rem] text-text-light mt-1" data-en="Years Expert" data-ro="Ani Experiență">Years Expert</div>
+                </div>
+                <div class="flex-shrink-0 bg-white rounded-2xl p-5 text-center min-w-[110px] shadow-card">
+                    <div class="text-[1.6rem] mb-1">💆</div>
+                    <div class="text-[1.5rem] font-bold text-primary leading-tight">3k+</div>
+                    <div class="text-[0.75rem] text-text-light mt-1" data-en="Happy Clients" data-ro="Clienți Fericiți">Happy Clients</div>
+                </div>
+                <div class="flex-shrink-0 bg-white rounded-2xl p-5 text-center min-w-[110px] shadow-card">
+                    <div class="text-[1.6rem] mb-1">✨</div>
+                    <div class="text-[1.5rem] font-bold text-primary leading-tight">25+</div>
+                    <div class="text-[0.75rem] text-text-light mt-1" data-en="Treatments" data-ro="Tratamente">Treatments</div>
+                </div>
+                <div class="flex-shrink-0 bg-white rounded-2xl p-5 text-center min-w-[110px] shadow-card">
+                    <div class="text-[1.6rem] mb-1">🏅</div>
+                    <div class="text-[1.5rem] font-bold text-primary leading-tight">100%</div>
+                    <div class="text-[0.75rem] text-text-light mt-1" data-en="Certified" data-ro="Certificat">Certified</div>
+                </div>
+            </div>
+
+            <!-- Promo banner -->
+            <div class="flex bg-white rounded-2xl overflow-hidden shadow-card-lg">
+                <img src="images/hero.jpeg" alt="SVET MEDICAL offer" class="w-[100px] object-cover flex-shrink-0 block">
+                <div class="p-4 flex flex-col justify-center gap-2">
+                    <span class="inline-block bg-primary text-white text-[0.68rem] font-bold tracking-[0.08em] uppercase rounded px-2 py-0.5"
+                          data-en="Mobile Exclusive" data-ro="Exclusiv Mobile">Mobile Exclusive</span>
+                    <p class="text-[0.82rem] text-text-light leading-[1.5] m-0"
+                       data-en="Book online &amp; receive a free skin consultation on your first visit."
+                       data-ro="Programează-te online și primești o consultație gratuită la prima vizită.">Book online &amp; receive a free skin consultation on your first visit.</p>
+                    <a href="#booking" class="btn-primary !py-[0.55rem] !px-4 !text-[0.85rem] self-start"
+                       data-en="Claim Offer" data-ro="Revendică Oferta">Claim Offer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 
+         ABOUT
+     -->
+    <!-- ABOUT -->
+    <section class="bg-white py-20 px-8" id="about">
+        <div class="max-w-[1600px] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+
+                <!-- Photo -->
+                <div>
+                    <img src="images/16.png" alt="SVET MEDICAL Salon"
+                         class="w-full rounded-[20px] shadow-card-lg block object-cover">
+                </div>
+
+                <!-- Text -->
+                <div>
+                    <h2 class="font-display text-[1.6rem] md:text-[2rem] text-text-dark leading-[1.3] mb-6"
+                        data-en="More than a salon <br>a <span class='text-primary'>medical experience</span>"
+                        data-ro="Mai mult decât un salon <br>o <span class='text-primary'>experiență medicală</span>">More than a salon <br>a <span class="text-primary">medical experience</span></h2>
+
+                    <p class="text-text-light leading-[1.8] mb-5"
+                       data-en="SVET MEDICAL was founded on the belief that true beauty comes from within. Our certified specialists combine medical-grade treatments with personalised care to help you look and feel your best."
+                       data-ro="SVET MEDICAL a fost fondată pe convingerea că frumusețea adevărată vine din interior. Specialiștii noștri certificați combină tratamente medicale cu îngrijire personalizată.">SVET MEDICAL was founded on the belief that true beauty comes from within. Our certified specialists combine medical-grade treatments with personalised care to help you look and feel your best.</p>
+
+                    <p class="text-text-light leading-[1.8] mb-5"
+                       data-en="From advanced skin therapies to classic beauty rituals, every visit is a step toward a more confident you."
+                       data-ro="De la terapii avansate pentru piele la ritualuri clasice de frumusețe, fiecare vizită este un pas spre o versiune mai încrezătoare a ta.">From advanced skin therapies to classic beauty rituals, every visit is a step toward a more confident you.</p>
+
+                    <!-- Stats -->
+                    <div class="flex gap-8 md:gap-8 mt-10">
+                        <div class="text-center">
+                            <div class="text-[1.6rem] md:text-[2rem] font-bold text-primary leading-tight">10+</div>
+                            <div class="text-[0.85rem] text-text-light mt-1" data-en="Years of Experience" data-ro="Ani de Experiență">Years of Experience</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[1.6rem] md:text-[2rem] font-bold text-primary leading-tight">3k+</div>
+                            <div class="text-[0.85rem] text-text-light mt-1" data-en="Happy Clients" data-ro="Clienți Fericiți">Happy Clients</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[1.6rem] md:text-[2rem] font-bold text-primary leading-tight">25+</div>
+                            <div class="text-[0.85rem] text-text-light mt-1" data-en="Treatments" data-ro="Tratamente">Treatments</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+         SERVICES
+     -->
+    <!-- SERVICES -->
+    <section class="bg-bg-light py-20 px-8" id="services">
+        <div class="max-w-[1600px] mx-auto">
+
+            <!-- Header -->
+            <div class="text-center mb-14">
+                <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3"
+                      data-en="What We Offer" data-ro="Ce Oferim">What We Offer</span>
+                <h2 class="font-display text-[2.2rem] text-text-dark mb-4"
+                    data-en="Our Services" data-ro="Serviciile Noastre">Our Services</h2>
+                <p class="text-text-light max-w-[560px] mx-auto leading-[1.8]"
+                   data-en="A selection of medical aesthetic and beauty treatments, designed especially for you."
+                   data-ro="O selec&#x21B;ie de tratamente estetice medicale &#x219;i de înfrumuse&#x21B;are, gândite special pentru tine.">A selection of medical aesthetic and beauty treatments, designed especially for you.</p>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+                <!-- HIFU -->
+                <div class="bg-white rounded-[20px] overflow-hidden shadow-card-lg hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-300 flex flex-col cursor-pointer"
+                     onclick="openPricePanel('hifu')">
+                    <div class="relative overflow-hidden h-[260px] group">
+                        <img src="images/HIFO.jpg" alt="HIFU"
+                             class="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.04]">
+                        <div class="absolute inset-0 bg-black/20 flex items-end p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <span class="text-white font-bold text-[0.85rem] tracking-[0.08em] uppercase"
+                                  data-en="View Prices" data-ro="Vezi Prețuri">View Prices</span>
+                        </div>
+                    </div>
+                    <div class="px-6 py-5 flex items-center justify-between">
+                        <h3 class="text-[1.2rem] text-text-dark font-bold tracking-[0.03em]">HIFU</h3>
+                        <button class="text-[0.8rem] text-primary font-semibold uppercase tracking-[0.05em] bg-transparent border-0 p-0 cursor-pointer"
+                                data-en="View Prices &rsaquo;" data-ro="Vezi Pre&#x21B;uri &rsaquo;">View Prices &rsaquo;</button>
+                    </div>
+                </div>
+
+                <!-- For Women -->
+                <div class="bg-white rounded-[20px] overflow-hidden shadow-card-lg hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-300 flex flex-col cursor-pointer"
+                     onclick="openPricePanel('femei')">
+                    <div class="relative overflow-hidden h-[260px] group">
+                        <img src="images/for_women.jpg" alt="For Women"
+                             class="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.04]">
+                        <div class="absolute inset-0 bg-black/20 flex items-end p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <span class="text-white font-bold text-[0.85rem] tracking-[0.08em] uppercase"
+                                  data-en="View Prices" data-ro="Vezi Prețuri">View Prices</span>
+                        </div>
+                    </div>
+                    <div class="px-6 py-5 flex items-center justify-between">
+                        <h3 class="text-[1.2rem] text-text-dark font-bold tracking-[0.03em]"
+                            data-en="For Women" data-ro="Pentru Femei">For Women</h3>
+                        <button class="text-[0.8rem] text-primary font-semibold uppercase tracking-[0.05em] bg-transparent border-0 p-0 cursor-pointer"
+                                data-en="View Prices &rsaquo;" data-ro="Vezi Pre&#x21B;uri &rsaquo;">View Prices &rsaquo;</button>
+                    </div>
+                </div>
+
+                <!-- EMS Shape -->
+                <div class="bg-white rounded-[20px] overflow-hidden shadow-card-lg hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-300 flex flex-col cursor-pointer"
+                     onclick="openPricePanel('ems')">
+                    <div class="relative overflow-hidden h-[260px] group">
+                        <img src="images/ems_shape.jpg" alt="EMS Shape"
+                             class="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.04]">
+                        <div class="absolute inset-0 bg-black/20 flex items-end p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <span class="text-white font-bold text-[0.85rem] tracking-[0.08em] uppercase"
+                                  data-en="View Prices" data-ro="Vezi Prețuri">View Prices</span>
+                        </div>
+                    </div>
+                    <div class="px-6 py-5 flex items-center justify-between">
+                        <h3 class="text-[1.2rem] text-text-dark font-bold tracking-[0.03em]">EMS Shape</h3>
+                        <button class="text-[0.8rem] text-primary font-semibold uppercase tracking-[0.05em] bg-transparent border-0 p-0 cursor-pointer"
+                                data-en="View Prices &rsaquo;" data-ro="Vezi Pre&#x21B;uri &rsaquo;">View Prices &rsaquo;</button>
+                    </div>
+                </div>
+
+                <!-- For Men -->
+                <div class="bg-white rounded-[20px] overflow-hidden shadow-card-lg hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-300 flex flex-col cursor-pointer"
+                     onclick="openPricePanel('barbati')">
+                    <div class="relative overflow-hidden h-[260px] group">
+                        <img src="images/for_men.jpg" alt="For Men"
+                             class="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.04]">
+                        <div class="absolute inset-0 bg-black/20 flex items-end p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                            <span class="text-white font-bold text-[0.85rem] tracking-[0.08em] uppercase"
+                                  data-en="View Prices" data-ro="Vezi Prețuri">View Prices</span>
+                        </div>
+                    </div>
+                    <div class="px-6 py-5 flex items-center justify-between">
+                        <h3 class="text-[1.2rem] text-text-dark font-bold tracking-[0.03em]"
+                            data-en="For Men" data-ro="Pentru Bărbați">For Men</h3>
+                        <button class="text-[0.8rem] text-primary font-semibold uppercase tracking-[0.05em] bg-transparent border-0 p-0 cursor-pointer"
+                                data-en="View Prices &rsaquo;" data-ro="Vezi Pre&#x21B;uri &rsaquo;">View Prices &rsaquo;</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="bg-white py-12 md:py-20 px-4 md:px-8" id="gallery">
+        <div class="max-w-[1600px] mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3"
+                      data-en="Our Work" data-ro="Munca Noastră">Our Work</span>
+                <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark mb-4"
+                    data-en="Gallery" data-ro="Galerie">Gallery</h2>
+                <p class="text-text-light max-w-[560px] mx-auto leading-[1.8] text-[0.92rem] md:text-base"
+                   data-en="A glimpse into the transformations and experiences at SVET MEDICAL."
+                   data-ro="O privire asupra transformărilor și experiențelor de la SVET MEDICAL.">A glimpse into the transformations and experiences at SVET MEDICAL.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <!-- Video 4 -->
+                <div class="relative bg-[#111] rounded-[12px] overflow-hidden aspect-video cursor-pointer group"
+                     onclick="openVideoLightbox('images/video4.mp4')">
+                    <video src="images/video4.mp4" muted preload="metadata"
+                           class="w-full h-full object-cover block pointer-events-none"></video>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/35 gap-2 transition-colors duration-300 group-hover:bg-black/15">
+                        <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center text-[1.4rem] text-primary-dark transition-transform duration-200 group-hover:scale-110">&#9654;</div>
+                        <span class="text-white text-[0.8rem] font-semibold tracking-[0.08em] uppercase"
+                              data-en="Watch Video" data-ro="Vezi Video">Watch Video</span>
+                    </div>
+                </div>
+
+                <!-- Video 5 -->
+                <div class="relative bg-[#111] rounded-[12px] overflow-hidden aspect-video cursor-pointer group"
+                     onclick="openVideoLightbox('images/video5.mp4')">
+                    <video src="images/video5.mp4" muted preload="metadata"
+                           class="w-full h-full object-cover block pointer-events-none"></video>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/35 gap-2 transition-colors duration-300 group-hover:bg-black/15">
+                        <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center text-[1.4rem] text-primary-dark transition-transform duration-200 group-hover:scale-110">&#9654;</div>
+                        <span class="text-white text-[0.8rem] font-semibold tracking-[0.08em] uppercase"
+                              data-en="Watch Video" data-ro="Vezi Video">Watch Video</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="bg-bg-light py-12 md:py-20 px-4 md:px-8" id="team">
+        <div class="max-w-[1600px] mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3"
+                      data-en="The People Behind Your Beauty" data-ro="Oamenii Din Spatele Frumuseții">The People Behind Your Beauty</span>
+                <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark mb-4"
+                    data-en="Our Team" data-ro="Echipa Noastră">Our Team</h2>
+                <p class="text-text-light max-w-[560px] mx-auto leading-[1.8] text-[0.92rem] md:text-base"
+                   data-en="Meet our talented and certified specialists dedicated to your care."
+                   data-ro="Cunoașteți specialiștii noștri talentați și certificați, dedicați îngrijirii dumneavoastră.">Meet our talented and certified specialists dedicated to your care.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+
+                <div class="bg-white rounded-[16px] overflow-hidden shadow-card text-center hover:-translate-y-1 transition-transform duration-300">
+                    <div class="w-full aspect-[3/4] bg-secondary border-b-2 border-dashed border-primary flex flex-col items-center justify-center gap-2 text-primary text-[0.78rem]">
+                        <span class="text-[2rem]">🖼</span><span>Team Photo</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-display text-[1rem] text-text-dark mb-1">Dr. Anna Ivanova</h3>
+                        <span class="text-[0.85rem] text-primary">Medical Aesthetics</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[16px] overflow-hidden shadow-card text-center hover:-translate-y-1 transition-transform duration-300">
+                    <div class="w-full aspect-[3/4] bg-secondary border-b-2 border-dashed border-primary flex flex-col items-center justify-center gap-2 text-primary text-[0.78rem]">
+                        <span class="text-[2rem]">🖼</span><span>Team Photo</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-display text-[1rem] text-text-dark mb-1">Maria Petrova</h3>
+                        <span class="text-[0.85rem] text-primary">Senior Cosmetologist</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[16px] overflow-hidden shadow-card text-center hover:-translate-y-1 transition-transform duration-300">
+                    <div class="w-full aspect-[3/4] bg-secondary border-b-2 border-dashed border-primary flex flex-col items-center justify-center gap-2 text-primary text-[0.78rem]">
+                        <span class="text-[2rem]">🖼</span><span>Team Photo</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-display text-[1rem] text-text-dark mb-1">Elena Koroleva</h3>
+                        <span class="text-[0.85rem] text-primary">Laser Specialist</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[16px] overflow-hidden shadow-card text-center hover:-translate-y-1 transition-transform duration-300">
+                    <div class="w-full aspect-[3/4] bg-secondary border-b-2 border-dashed border-primary flex flex-col items-center justify-center gap-2 text-primary text-[0.78rem]">
+                        <span class="text-[2rem]">🖼</span><span>Team Photo</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-display text-[1rem] text-text-dark mb-1">Sofia Novikova</h3>
+                        <span class="text-[0.85rem] text-primary">Makeup Artist</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="bg-white py-12 md:py-20 px-4 md:px-8">
+        <div class="max-w-[1600px] mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-[0.8rem] tracking-[0.22em] uppercase text-primary font-semibold block mb-3"
+                      data-en="Client Stories" data-ro="Poveștile Clienților">Client Stories</span>
+                <h2 class="font-display text-[1.7rem] md:text-[2.2rem] text-text-dark"
+                    data-en="What Our Clients Say" data-ro="Ce Spun Clienții Noștri">What Our Clients Say</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <div class="bg-bg-light rounded-[16px] p-8 shadow-card">
+                    <div class="text-primary text-[1.1rem] mb-4">★★★★★</div>
+                    <p class="text-text-light leading-[1.8] italic mb-6"
+                       data-en='"Incredible experience! The staff at SVET MEDICAL are true professionals. My skin has never looked better."'
+                       data-ro='"Experiență incredibilă! Personalul de la SVET MEDICAL sunt adevărați profesioniști. Pielea mea nu a arătat niciodată mai bine."'>"Incredible experience! The staff at SVET MEDICAL are true professionals. My skin has never looked better."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-full bg-secondary border-2 border-dashed border-primary flex items-center justify-center text-[0.6rem] font-bold text-primary flex-shrink-0">PH</div>
+                        <div>
+                            <div class="font-semibold text-text-dark text-[0.9rem]">Olga S.</div>
+                            <div class="text-[0.8rem] text-text-light" data-en="Facial Treatment" data-ro="Tratament Facial">Facial Treatment</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-light rounded-[16px] p-8 shadow-card">
+                    <div class="text-primary text-[1.1rem] mb-4">★★★★★</div>
+                    <p class="text-text-light leading-[1.8] italic mb-6"
+                       data-en='"I came for laser therapy and left feeling like a completely different person. Highly recommend!"'
+                       data-ro='"Am venit pentru terapie laser și am plecat simțindu-mă o persoană complet diferită. Recomand cu căldură!"'>"I came for laser therapy and left feeling like a completely different person. Highly recommend!"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-full bg-secondary border-2 border-dashed border-primary flex items-center justify-center text-[0.6rem] font-bold text-primary flex-shrink-0">PH</div>
+                        <div>
+                            <div class="font-semibold text-text-dark text-[0.9rem]">Natalia K.</div>
+                            <div class="text-[0.8rem] text-text-light" data-en="Laser Therapy" data-ro="Terapie Laser">Laser Therapy</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-light rounded-[16px] p-8 shadow-card">
+                    <div class="text-primary text-[1.1rem] mb-4">★★★★★</div>
+                    <p class="text-text-light leading-[1.8] italic mb-6"
+                       data-en='"A truly luxurious salon with medical expertise. The team makes you feel valued every step of the way."'
+                       data-ro='"Un salon cu adevărat luxos cu expertiză medicală. Echipa te face să te simți apreciat la fiecare pas."'>"A truly luxurious salon with medical expertise. The team makes you feel valued every step of the way."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-full bg-secondary border-2 border-dashed border-primary flex items-center justify-center text-[0.6rem] font-bold text-primary flex-shrink-0">PH</div>
+                        <div>
+                            <div class="font-semibold text-text-dark text-[0.9rem]">Irina M.</div>
+                            <div class="text-[0.8rem] text-text-light" data-en="Body Contouring" data-ro="Conturare Corporală">Body Contouring</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING -->
+    <section class="bg-gradient-to-br from-primary to-primary-dark py-12 md:py-20 px-4 md:px-8 text-center" id="booking">
+        <div class="max-w-[1600px] mx-auto">
+            <span class="text-[0.8rem] tracking-[0.22em] uppercase font-semibold block mb-3 text-white/80"
+                  data-en="Ready to Begin?" data-ro="Gata să Începi?">Ready to Begin?</span>
+            <h2 class="font-display text-[1.8rem] md:text-[2.4rem] text-white mb-4"
+                data-en="Book Your Appointment" data-ro="Fă o Programare">Book Your Appointment</h2>
+            <p class="text-white/90 max-w-[520px] mx-auto leading-[1.8] mb-10"
+               data-en="Choose your preferred service and let us take care of the rest. We look forward to welcoming you at SVET MEDICAL."
+               data-ro="Alege serviciul preferat și lasă-ne pe noi să ne ocupăm de restul. Așteptăm cu nerăbdare să te primim la SVET MEDICAL.">Choose your preferred service and let us take care of the rest. We look forward to welcoming you at SVET MEDICAL.</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center flex-wrap">
+                <input type="text" placeholder="Your Name" data-en-placeholder="Your Name" data-ro-placeholder="Numele Tău"
+                       class="px-6 py-[0.85rem] rounded-full border-0 outline-none text-[0.95rem] bg-white/95 text-text-dark w-full md:min-w-[180px] md:w-auto">
+                <input type="tel" placeholder="Phone Number" data-en-placeholder="Phone Number" data-ro-placeholder="Număr de Telefon"
+                       class="px-6 py-[0.85rem] rounded-full border-0 outline-none text-[0.95rem] bg-white/95 text-text-dark w-full md:min-w-[180px] md:w-auto">
+                <select class="px-6 py-[0.85rem] rounded-full border-0 outline-none text-[0.95rem] bg-white/95 text-text-dark w-full md:min-w-[180px] md:w-auto">
+                    <option value="" disabled selected data-en="Select a service" data-ro="Selectează un serviciu">Select a service</option>
+                    <option data-en="HIFU" data-ro="HIFU">HIFU</option>
+                    <option data-en="For Women" data-ro="Pentru Femei">For Women</option>
+                    <option data-en="EMS Shape" data-ro="EMS Shape">EMS Shape</option>
+                    <option data-en="For Men" data-ro="Pentru Bărbați">For Men</option>
+                </select>
+                <input type="date" class="px-6 py-[0.85rem] rounded-full border-0 outline-none text-[0.95rem] bg-white/95 text-text-dark w-full md:w-auto">
+                <button class="bg-white text-primary font-bold text-[0.95rem] px-8 py-[0.85rem] rounded-full border-0 cursor-pointer hover:opacity-90 hover:-translate-y-0.5 transition-all duration-200 w-full md:w-auto"
+                        data-en="Book Now" data-ro="Programează">Book Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="bg-bg-light py-12 md:py-20 px-4 md:px-8" id="contact">
+        <div class="max-w-[1600px] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+
+                <!-- Info side -->
+                <div>
+                    <h2 class="font-display text-[1.6rem] md:text-[2rem] text-text-dark mb-6"
+                        data-en="Find Us at<br><span class='text-primary'>SVET MEDICAL</span>"
+                        data-ro="Găsește-ne la<br><span class='text-primary'>SVET MEDICAL</span>">Find Us at<br><span class="text-primary">SVET MEDICAL</span></h2>
+
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-11 h-11 bg-secondary rounded-full flex items-center justify-center text-[1.2rem] flex-shrink-0">📍</div>
+                        <div>
+                            <strong class="block text-text-dark text-[0.9rem] mb-0.5" data-en="Address" data-ro="Adresă">Address</strong>
+                            <span class="text-text-light text-[0.9rem]">Barbu Văcărescu 164, București</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-11 h-11 bg-secondary rounded-full flex items-center justify-center text-[1.2rem] flex-shrink-0">📞</div>
+                        <div>
+                            <strong class="block text-text-dark text-[0.9rem] mb-0.5" data-en="Phone" data-ro="Telefon">Phone</strong>
+                            <span class="text-text-light text-[0.9rem]">+40788844819</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-11 h-11 bg-secondary rounded-full flex items-center justify-center text-[1.2rem] flex-shrink-0">✉️</div>
+                        <div>
+                            <strong class="block text-text-dark text-[0.9rem] mb-0.5" data-en="Email" data-ro="Email">Email</strong>
+                            <span class="text-text-light text-[0.9rem]">svetmed@gmail.com</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-11 h-11 bg-secondary rounded-full flex items-center justify-center text-[1.2rem] flex-shrink-0">🕐</div>
+                        <div>
+                            <strong class="block text-text-dark text-[0.9rem] mb-0.5" data-en="Working Hours" data-ro="Program de Lucru">Working Hours</strong>
+                            <span class="text-text-light text-[0.9rem]"
+                                  data-en="Mon - Sat: 9:00 AM - 8:00 PM" data-ro="Lun - Sâm: 09:00 - 20:00">Mon - Sat: 9:00 AM - 8:00 PM</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-11 h-11 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <circle cx="12" cy="12" r="4"/>
+                                <circle cx="17.5" cy="6.5" r="1" fill="#c9a96e" stroke="none"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong class="block text-text-dark text-[0.9rem] mb-0.5">Instagram</strong>
+                            <a href="https://www.instagram.com/svetmedical" target="_blank" rel="noopener"
+                               class="text-primary text-[0.9rem] hover:text-primary-dark transition-colors no-underline">@svetmedical</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Maps embed -->
+                <div class="w-full aspect-[4/3] rounded-[16px] overflow-hidden shadow-card-lg">
+                    <iframe
+                        src="https://maps.google.com/maps?q=44.4693977,26.1102239&output=embed&z=17"
+                        width="100%" height="100%"
+                        style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="SVET MEDICAL location"
+                        class="w-full h-full block"></iframe>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-text-dark text-white/75 pt-12 px-4 md:px-8 pb-6 pb-[calc(1.5rem+72px)] md:pb-6">
+        <div class="max-w-[1600px] mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr] gap-8 md:gap-12 pb-10 border-b border-white/10 mb-6">
+
+                <div class="col-span-2 md:col-span-1">
+                    <span class="font-display text-white text-xl block mb-4">SVET <span class="text-primary">MEDICAL</span></span>
+                    <p class="text-[0.9rem] leading-[1.7]"
+                       data-en="Premium beauty and medical aesthetic treatments. Your transformation begins here."
+                       data-ro="Tratamente premium de frumusețe și estetică medicală. Transformarea ta începe aici.">Premium beauty and medical aesthetic treatments. Your transformation begins here.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-[0.9rem] tracking-[0.08em] uppercase mb-5" data-en="Services" data-ro="Servicii">Services</h4>
+                    <a href="#services" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline">HIFU</a>
+                    <a href="#services" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline"
+                       data-en="For Women" data-ro="Pentru Femei">For Women</a>
+                    <a href="#services" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline">EMS Shape</a>
+                    <a href="#services" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline"
+                       data-en="For Men" data-ro="Pentru Bărbați">For Men</a>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-[0.9rem] tracking-[0.08em] uppercase mb-5" data-en="Company" data-ro="Companie">Company</h4>
+                    <a href="#about" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline"
+                       data-en="About Us" data-ro="Despre Noi">About Us</a>
+                    <a href="#team" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline"
+                       data-en="Our Team" data-ro="Echipa">Our Team</a>
+                    <a href="#gallery" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline"
+                       data-en="Gallery" data-ro="Galerie">Gallery</a>
+                    <a href="#" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline"
+                       data-en="Blog" data-ro="Blog">Blog</a>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-[0.9rem] tracking-[0.08em] uppercase mb-5">Contact</h4>
+                    <a href="https://maps.google.com/?q=Barbu+Vacarescu+164+Bucuresti" target="_blank"
+                       class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline">Barbu Văcărescu 164, București</a>
+                    <a href="tel:+40788844819" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline">+40788844819</a>
+                    <a href="mailto:svetmed@gmail.com" class="block text-[0.9rem] text-white/65 mb-2.5 hover:text-primary transition-colors no-underline">svetmed@gmail.com</a>
+                </div>
+
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-[0.85rem] text-center md:text-left">
+                <span>&copy; 2026 SVET MEDICAL. All rights reserved.</span>
+                <div class="flex gap-4">
+                    <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-[0.85rem] font-bold text-white/75 no-underline hover:bg-primary transition-colors">f</a>
+                    <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-[0.85rem] font-bold text-white/75 no-underline hover:bg-primary transition-colors">in</a>
+                    <a href="#" class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-[0.85rem] font-bold text-white/75 no-underline hover:bg-primary transition-colors">ig</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRICE PHOTO ZOOM -->
+    <div class="price-zoom-overlay" id="price-zoom" onclick="closePriceZoom()">
+        <button class="fixed top-5 right-6 text-white text-[2rem] bg-transparent border-none cursor-pointer z-[10001] opacity-75 hover:opacity-100 transition-opacity leading-none" onclick="closePriceZoom()">&times;</button>
+        <img id="price-zoom-img" src="" alt="Price list" class="max-w-[92vw] max-h-[92vh] rounded-[12px] object-contain shadow-[0_8px_48px_rgba(0,0,0,0.6)] cursor-zoom-out">
+    </div>
+
+    <!-- PRICE PANEL BACKDROP -->
+    <div class="price-panel-backdrop" id="price-backdrop" onclick="closePricePanel()"></div>
+
+    <!-- PRICE PANEL -->
+    <aside class="price-panel" id="price-panel">
+        <div class="sticky top-0 bg-white px-7 pt-6 pb-4 border-b border-[#f0e8db] flex items-center justify-between z-10">
+            <h2 class="font-display text-[1.5rem] text-text-dark m-0" id="pp-title">HIFU</h2>
+            <button class="bg-transparent border-none text-[1.6rem] cursor-pointer text-text-dark opacity-60 hover:opacity-100 transition-opacity leading-none" onclick="closePricePanel()">&times;</button>
+        </div>
+        <img class="w-full h-[180px] object-cover block" id="pp-cover" src="" alt="">
+        <div class="px-7 py-5 flex-1">
+            <div id="pp-photos" class="flex flex-col gap-4"></div>
+        </div>
+        <a href="#booking" class="mx-7 mb-8 block text-center bg-primary text-white font-bold text-[0.95rem] tracking-[0.06em] uppercase py-[0.9rem] rounded-[10px] no-underline hover:bg-primary-dark transition-colors"
+           onclick="closePricePanel()" data-en="Book an Appointment" data-ro="Programeaz&#x103;-te">Book an Appointment</a>
+    </aside>
+
+    <!-- VIDEO LIGHTBOX -->
+    <div class="video-lightbox" id="video-lightbox" onclick="closeVideoLightboxOnBg(event)">
+        <button class="fixed top-5 right-6 text-white text-[2rem] bg-transparent border-none cursor-pointer z-[10000] opacity-80 hover:opacity-100 transition-opacity leading-none" onclick="closeVideoLightbox()">&times;</button>
+        <video id="lightbox-video" controls autoplay playsinline class="max-w-[90vw] max-h-[85vh] rounded-[16px] shadow-[0_8px_40px_rgba(0,0,0,0.6)]"></video>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox-overlay" id="lightbox" onclick="closeLightboxOnBg(event)">
+        <button class="fixed top-5 right-6 text-white text-[2rem] bg-transparent border-none cursor-pointer leading-none z-[10000] opacity-80 hover:opacity-100 transition-opacity" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-arrow fixed top-1/2 -translate-y-1/2 left-4 bg-white/15 border-none text-white text-[2rem] w-[52px] h-[52px] rounded-full cursor-pointer z-[10000] hover:bg-white/30 transition-colors flex items-center justify-center" onclick="lightboxNav(-1)">&#8249;</button>
+        <div class="relative max-w-[90vw] max-h-[85vh] flex items-center justify-center">
+            <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[80vh] object-contain rounded-[12px] shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
+        </div>
+        <button class="lightbox-arrow fixed top-1/2 -translate-y-1/2 right-4 bg-white/15 border-none text-white text-[2rem] w-[52px] h-[52px] rounded-full cursor-pointer z-[10000] hover:bg-white/30 transition-colors flex items-center justify-center" onclick="lightboxNav(1)">&#8250;</button>
+        <div class="text-white/70 text-[0.85rem] mt-4 tracking-[0.1em]" id="lightbox-counter"></div>
+    </div>
+
+    <script>
+        const galleries = {
+            hifu:    ['images/1.jpeg', 'images/2.jpeg'],
+            femei:   ['images/3.jpeg', 'images/4.jpeg'],
+            ems:     ['images/5.jpeg'],
+            barbati: ['images/6.jpeg', 'images/7.jpeg']
+        };
+
+        let currentGallery = [];
+        let currentIndex   = 0;
+
+        function openLightbox(category, index) {
+            currentGallery = galleries[category];
+            currentIndex   = index;
+            updateLightbox();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeLightboxOnBg(e) {
+            if (e.target === document.getElementById('lightbox')) closeLightbox();
+        }
+
+        function lightboxNav(dir) {
+            currentIndex = (currentIndex + dir + currentGallery.length) % currentGallery.length;
+            updateLightbox();
+        }
+
+        function updateLightbox() {
+            document.getElementById('lightbox-img').src = currentGallery[currentIndex];
+            document.getElementById('lightbox-counter').textContent =
+                (currentIndex + 1) + ' / ' + currentGallery.length;
+            // hide arrows if only 1 photo
+            const arrows = document.querySelectorAll('.lightbox-arrow');
+            arrows.forEach(a => a.style.display = currentGallery.length > 1 ? 'flex' : 'none');
+        }
+
+        // keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (document.getElementById('price-zoom').classList.contains('active')) { closePriceZoom(); return; }
+                if (document.getElementById('price-panel').classList.contains('open')) { closePricePanel(); return; }
+                if (document.getElementById('video-lightbox').classList.contains('active')) { closeVideoLightbox(); return; }
+                closeLightbox();
+                return;
+            }
+            if (document.getElementById('video-lightbox').classList.contains('active')) return;
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+            if (e.key === 'ArrowRight') lightboxNav(1);
+            if (e.key === 'ArrowLeft')  lightboxNav(-1);
+        });
+
+        // ── PRICE PANEL ─────────────────────────────────────────────
+        const priceData = {
+            hifu:    { en: 'HIFU',       ro: 'HIFU',             cover: 'images/HIFO.jpg',      photos: ['images/2.jpeg'] },
+            femei:   { en: 'For Women',  ro: 'Pentru Femei',     cover: 'images/for_women.jpg', photos: ['images/3.jpeg', 'images/4.jpeg'] },
+            ems:     { en: 'EMS Shape',  ro: 'EMS Shape',        cover: 'images/ems_shape.jpg', photos: ['images/5.jpeg'] },
+            barbati: { en: 'For Men',    ro: 'Pentru Bărbați',   cover: 'images/for_men.jpg',   photos: ['images/6.jpeg', 'images/7.jpeg'] },
+        };
+
+        function openPricePanel(key) {
+            const lang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+            const data = priceData[key];
+            document.getElementById('pp-title').textContent = data[lang];
+            document.getElementById('pp-cover').src = data.cover;
+            document.getElementById('pp-cover').alt = data[lang];
+            document.getElementById('pp-photos').innerHTML = data.photos
+                .map(src => `<img src="${src}" alt="Price list" onclick="openPriceZoom('${src}')" class="w-full rounded-[10px] block shadow-[0_2px_12px_rgba(0,0,0,0.08)] cursor-zoom-in hover:opacity-90 transition-opacity">`)
+                .join('');
+            document.getElementById('price-panel').classList.add('open');
+            document.getElementById('price-backdrop').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePricePanel() {
+            document.getElementById('price-panel').classList.remove('open');
+            document.getElementById('price-backdrop').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function openPriceZoom(src) {
+            document.getElementById('price-zoom-img').src = src;
+            document.getElementById('price-zoom').classList.add('active');
+        }
+
+        function closePriceZoom() {
+            document.getElementById('price-zoom').classList.remove('active');
+            document.getElementById('price-zoom-img').src = '';
+        }
+
+        // ── VIDEO LIGHTBOX ──────────────────────────────────────────
+        function openVideoLightbox(src) {
+            // stop any other playing video (gallery thumbs)
+            document.querySelectorAll('.gallery-item.video-card video').forEach(v => v.pause());
+            // stop photo lightbox if open
+            closeLightbox();
+
+            const lv = document.getElementById('lightbox-video');
+            lv.src = src;
+            lv.load();
+            lv.play();
+            document.getElementById('video-lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoLightbox() {
+            const lv = document.getElementById('lightbox-video');
+            lv.pause();
+            lv.src = '';
+            document.getElementById('video-lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeVideoLightboxOnBg(e) {
+            if (e.target === document.getElementById('video-lightbox')) closeVideoLightbox();
+        }
+
+        // MASCOT – appear after 3-second delay
+        setTimeout(function() {
+            var mascot = document.getElementById('mascot');
+            if (mascot) mascot.classList.add('mascot-visible');
+        }, 3000);
+
+        // MASCOT – cycle through messages on each hover
+        const mascotMessages = [
+            { en: { title: "Hi, I'm Stella! ✨",   body: "Welcome to SVET MEDICAL &mdash; where beauty meets science." },
+              ro: { title: "Bună, sunt Stella! ✨", body: "Bine ai venit la SVET MEDICAL &mdash; unde frumusețea întâlnește știința." } },
+            { en: { title: "Ready to glow? 💫",    body: "Book an appointment today and treat yourself to something special." },
+              ro: { title: "Pregătit să strălucești? 💫", body: "Fă o programare azi și răsfață-te cu ceva special." } },
+            { en: { title: "Did you know? 🌿",     body: "Our medical-grade treatments are carried out by certified specialists." },
+              ro: { title: "Știai că? 🌿",          body: "Tratamentele noastre medicale sunt efectuate de specialiști certificați." } },
+            { en: { title: "Special offer! 🎁",    body: "Book online and receive a free skin consultation on your first visit." },
+              ro: { title: "Ofertă specială! 🎁",   body: "Programează-te online și primești o consultație gratuită la prima vizită." } },
+            { en: { title: "We miss you! 💛",      body: "Haven't visited yet? Come meet the SVET MEDICAL team &mdash; you'll love it." },
+              ro: { title: "Ne-ai lipsit! 💛",      body: "Nu ai vizitat încă? Vino să cunoști echipa SVET MEDICAL &mdash; o să îți placă." } },
+            { en: { title: "Looking radiant! ✨",  body: "From HIFU to EMS Shape, we have a treatment perfectly tailored for you." },
+              ro: { title: "Arăți radiant! ✨",     body: "De la HIFU la EMS Shape, avem un tratament creat special pentru tine." } },
+        ];
+        let mascotMsgIndex = 0;
+
+        (function() {
+            var mascot = document.getElementById('mascot');
+            var bubble = document.getElementById('mascot-bubble');
+            if (!mascot || !bubble) return;
+
+            mascot.addEventListener('mouseenter', function() {
+                var entry = mascotMessages[mascotMsgIndex % mascotMessages.length];
+                var msg = entry[currentLang] || entry['en'];
+                bubble.innerHTML = '<strong>' + msg.title + '</strong>' + msg.body;
+                mascotMsgIndex++;
+            });
+        })();
+
+        // MOBILE NAV TOGGLE
+        function toggleMobileNav() {
+            document.body.classList.toggle('mobile-nav-open');
+            // show/hide the × close item inside the menu
+            const closeItem = document.querySelector('.mobile-close-nav');
+            if (closeItem) {
+                closeItem.classList.toggle('hidden', !document.body.classList.contains('mobile-nav-open'));
+            }
+        }
+
+        // Close mobile nav when a link is clicked
+        document.querySelectorAll('#nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (document.body.classList.contains('mobile-nav-open')) toggleMobileNav();
+            });
+        });
+
+        // LANGUAGE SWITCHER
+        let currentLang = 'en';
+
+        function setLang(lang) {
+            currentLang = lang;
+            // update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+            });
+            // translate all elements with data-en / data-ro
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.innerHTML = el.getAttribute('data-' + lang);
+            });
+            // translate input placeholders
+            document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+                el.placeholder = el.getAttribute('data-' + lang + '-placeholder');
+            });
+        }
+    </script>
+
+    <!-- MASCOT: STELLA – SVET MEDICAL beauty specialist mascot -->
+    <div class="mascot-widget" id="mascot" role="img" aria-label="Stella, SVET MEDICAL mascot">
+        <svg viewBox="-12 0 114 165" width="88" height="165" xmlns="http://www.w3.org/2000/svg">
+
+            <!-- Hair -->
+            <ellipse cx="45" cy="44" rx="30" ry="25" fill="#5a2d1e"/>
+            <ellipse cx="17" cy="58" rx="9" ry="19" fill="#5a2d1e"/>
+            <ellipse cx="73" cy="58" rx="9" ry="19" fill="#5a2d1e"/>
+
+            <!-- Tiara -->
+            <rect x="23" y="21" width="44" height="6" rx="3" fill="#c9a96e"/>
+            <polygon points="32,21 36,10 40,21" fill="#c9a96e"/>
+            <polygon points="43,21 47,5  51,21" fill="#c9a96e"/>
+            <polygon points="54,21 58,10 62,21" fill="#c9a96e"/>
+            <circle cx="47" cy="6"  r="3"   fill="#f3e9d2"/>
+            <circle cx="36" cy="11" r="2"   fill="#f3e9d2"/>
+            <circle cx="58" cy="11" r="2"   fill="#f3e9d2"/>
+
+            <!-- Face -->
+            <circle cx="45" cy="56" r="30" fill="#fcd5b0"/>
+
+            <!-- Eyebrows -->
+            <path d="M32,46 Q37,42 42,46" stroke="#5a2d1e" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M48,46 Q53,42 58,46" stroke="#5a2d1e" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+            <!-- Eyes -->
+            <circle cx="37" cy="53" r="5"   fill="#2c2c2c"/>
+            <circle cx="53" cy="53" r="5"   fill="#2c2c2c"/>
+            <circle cx="39" cy="51" r="1.8" fill="white"/>
+            <circle cx="55" cy="51" r="1.8" fill="white"/>
+
+            <!-- Blush -->
+            <ellipse cx="29" cy="62" rx="6"   ry="3.5" fill="#f4a0b0" opacity="0.55"/>
+            <ellipse cx="61" cy="62" rx="6"   ry="3.5" fill="#f4a0b0" opacity="0.55"/>
+
+            <!-- Nose -->
+            <circle cx="45" cy="60" r="2" fill="#e8a585" opacity="0.7"/>
+
+            <!-- Smile -->
+            <path d="M37,68 Q45,76 53,68" stroke="#d45570" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+            <!-- Neck (behind body) -->
+            <rect x="39" y="84" width="12" height="9" fill="#fcd5b0"/>
+
+            <!-- Body / Lab coat — drawn before arms so arms sit on top -->
+            <path d="M14,133 Q14,93 45,93 Q76,93 76,133 L72,158 L18,158 Z" fill="#fdf8f2" stroke="#e0d6ea" stroke-width="1.5"/>
+
+            <!-- Collar -->
+            <path d="M35,93 L45,114 L55,93" fill="#c9a96e" opacity="0.75"/>
+
+            <!-- Medical cross -->
+            <rect x="41" y="122" width="8"  height="22" rx="2.5" fill="#c9a96e" opacity="0.28"/>
+            <rect x="34" y="129" width="22" height="8"  rx="2.5" fill="#c9a96e" opacity="0.28"/>
+
+            <!-- Right arm — on top of body -->
+            <path d="M72,102 Q87,120 83,140" stroke="#fcd5b0" stroke-width="12" stroke-linecap="round" fill="none"/>
+
+            <!-- Left arm + wand — on top of body, pivot at shoulder (18,102) -->
+            <g id="mascot-wand-arm">
+                <!-- Arm from shoulder down to hand -->
+                <path d="M18,102 Q4,112 10,128" stroke="#fcd5b0" stroke-width="12" stroke-linecap="round" fill="none"/>
+                <!-- Wand stick: from hand upward to star tip -->
+                <line x1="10" y1="128" x2="0" y2="88" stroke="#c9a96e" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Wand star at the TIP (top) of the wand -->
+                <g transform="translate(0,88)">
+                    <polygon points="0,-9 2.5,-2.8 9.5,-2.7 4,1.8 5.5,8.5 0,5 -5.5,8.5 -4,1.8 -9.5,-2.7 -2.5,-2.8" fill="#c9a96e"/>
+                    <polygon points="0,-6 1.7,-1.9 6,-1.8 2.7,1.2 3.8,5.6 0,3.4 -3.8,5.6 -2.7,1.2 -6,-1.8 -1.7,-1.9" fill="#f3e9d2"/>
+                </g>
+                <animateTransform attributeName="transform" type="rotate"
+                    values="0 18 102; -18 18 102; 14 18 102; 0 18 102"
+                    keyTimes="0; 0.25; 0.75; 1"
+                    dur="1.8s" repeatCount="indefinite"/>
+            </g>
+
+            <!-- Shoulder patches — painted last to cleanly hide the arm/body seam -->
+            <circle cx="18" cy="103" r="7" fill="#fdf8f2"/>
+            <circle cx="72" cy="103" r="7" fill="#fdf8f2"/>
+
+            <!-- Sparkles -->
+            <g id="mascot-sparkles" stroke="#c9a96e" fill="#c9a96e">
+                <circle cx="79" cy="88" r="2.2"/>
+                <line x1="79" y1="82" x2="79" y2="94" stroke-width="1.5"/>
+                <line x1="73" y1="88" x2="85" y2="88" stroke-width="1.5"/>
+                <circle cx="14" cy="78" r="1.6"/>
+                <line x1="14" y1="73" x2="14" y2="83" stroke-width="1.2"/>
+                <line x1="9"  y1="78" x2="19" y2="78" stroke-width="1.2"/>
+            </g>
+
+        </svg>
+        <span class="mascot-label">Stella &#10024;</span>
+
+        <!-- Speech bubble (message cycles on each hover) -->
+        <div class="mascot-bubble" id="mascot-bubble">
+            <strong data-en="Hi, I'm Stella! ✨" data-ro="Bună, sunt Stella! ✨">Hi, I'm Stella! ✨</strong>
+            <span data-en="Welcome to SVET MEDICAL — where beauty meets science." data-ro="Bine ai venit la SVET MEDICAL — unde frumusețea întâlnește știința.">Welcome to SVET MEDICAL — where beauty meets science.</span>
+        </div>
+    </div>
+
+    <!-- MOBILE STICKY CTA BAR -->
+    <div class="hidden max-[768px]:flex fixed bottom-0 left-0 right-0 z-[900] bg-white border-t border-[#f0e8db] px-5 gap-3 items-center shadow-[0_-4px_20px_rgba(0,0,0,0.1)] py-3 [padding-bottom:calc(0.75rem+env(safe-area-inset-bottom))]" aria-label="Quick booking actions">
+        <a href="#booking" class="btn-primary flex-1 text-center !py-3 !px-4 !text-base" data-en="Book an Appointment" data-ro="Fă o Programare">Book an Appointment</a>
+        <a href="tel:+40788844819" class="btn-outline flex-shrink-0 !py-3 !px-[1.1rem] !text-[0.9rem]" aria-label="Call us">&#128222; Call</a>
+    </div>
+
+</body>
+</html>
