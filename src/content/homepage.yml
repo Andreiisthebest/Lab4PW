@@ -1,17 +1,20 @@
-﻿hero:
+hero:
   badge_en: Premium Beauty & Medical Aesthetics
   badge_ro: Frumusete Premium & Estetica Medicala
-  title_en: "Your Beauty,<br>Our <span class='text-primary'>Expertise</span>"
-  title_ro: "Frumusetea Ta,<br><span class='text-primary'>Expertiza</span> Noastra"
-  description_en: At SVET MEDICAL we blend cutting-edge medical aesthetics with luxurious beauty treatments.
+  title_en: Your Beauty,<br>Our <span class='text-primary'>Expertise</span>
+  title_ro: Frumusetea Ta,<br><span class='text-primary'>Expertiza</span> Noastra
+  description_en: At SVET MEDICAL we blend cutting-edge medical aesthetics with
+    luxurious beauty treatments.
   description_ro: La SVET MEDICAL imbinam estetica medicala cu tratamente de frumusete luxoase.
   video: /images/video3.mp4
 about:
-  heading_en: "More than a salon <br>a <span class='text-primary'>medical experience</span>"
-  heading_ro: "Mai mult decat un salon <br>o <span class='text-primary'>experienta medicala</span>"
+  heading_en: More than a salon <br>a <span class='text-primary'>medical experience</span>
+  heading_ro: Mai mult decat un salon <br>o <span class='text-primary'>experienta
+    medicala</span>
   p1_en: SVET MEDICAL was founded on the belief that true beauty comes from within.
-  p1_ro: SVET MEDICAL a fost fondata pe convingerea ca frumusetea adevarata vine din interior.
-  p2_en: Every visit is a step toward a more confident you.
+  p1_ro: SVET MEDICAL a fost fondata pe convingerea ca frumusetea adevarata vine
+    din interior.
+  p2_en: Every visit is a step toward a more confident you!
   p2_ro: Fiecare vizita este un pas spre o versiune mai increzatoare a ta.
   image: /images/16.png
 contact:
@@ -50,5 +53,5 @@ ui:
     button_en: Book Now
     button_ro: Programeaza
   contact:
-    heading_en: "Find Us at<br><span class='text-primary'>SVET MEDICAL</span>"
-    heading_ro: "Ne gasesti la<br><span class='text-primary'>SVET MEDICAL</span>"
+    heading_en: Find Us at<br><span class='text-primary'>SVET MEDICAL</span>
+    heading_ro: Ne gasesti la<br><span class='text-primary'>SVET MEDICAL</span>
