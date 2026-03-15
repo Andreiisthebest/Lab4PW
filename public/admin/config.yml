@@ -3,7 +3,7 @@ backend:
   branch: main
 
 # Switch to git-gateway when using Netlify Identity in production.
-publish_mode: editorial_workflow
+publish_mode: simple
 locale: en
 
 media_folder: public/images
