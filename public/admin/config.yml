@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: Andreiisthebest/Lab4PW
+  name: git-gateway
   branch: main
 
 # Switch to git-gateway when using Netlify Identity in production.
